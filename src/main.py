@@ -16,8 +16,6 @@ class Hangman:
         print('-------------------------------------------------------')
 
 
-
-
 if __name__ == '__main__':
     game = Hangman()
     game.main_menu()
