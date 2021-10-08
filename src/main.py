@@ -1,4 +1,5 @@
 import random
+from src.player import Player
 
 class Hangman:
     def __init__(self):
@@ -23,6 +24,23 @@ class Hangman:
             pass
         else:
             self.main_menu(user_input)
+
+
+    def new_user_screen(self):
+        print('-------------------------------------------------------')
+        print("|                !WELCOME TO HANGMAN!                 |")
+        print('-------------------------------------------------------')
+        print("**                                                   **")
+        print("**                  Become a Player!                 **")
+        print("**                                                   **")
+        print("**                  Input a username                 **")
+        print("**                                                   **")
+        print("**                                                   **")
+        print("**                                                   **")
+        print('-------------------------------------------------------')
+        user_input = input("Input:")
+        #TODO: go to validator
+
     
     def main_menu(self, username):
         print('-------------------------------------------------------')
