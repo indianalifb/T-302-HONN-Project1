@@ -1,9 +1,13 @@
 import random
-#from player import Player
+from player import Player
+from username_validator import UsernameValidator
 
 class Hangman:
     def __init__(self):
-        game_mode = ""
+        self.username = ""
+        self.game_mode = ""
+        self.game_difficulty = ""
+        self.game_category = ""
 
 
     def welcome_screen(self):
@@ -15,15 +19,16 @@ class Hangman:
         print("**           Input your username to log in           **")
         print("**                                                   **")
         print("**                        OR                         **")
-        print("**                 Input: 'new user'                 **")
+        print("**                   Input: 'new'                    **")
         print("**                                                   **")
         print("**                                                   **")
         print('-------------------------------------------------------')
         user_input = input("Input:")
-        if user_input == "new user":
-            pass
+        if user_input == "new":
+            self.new_user_screen()
         else:
-            self.main_menu(user_input)
+            self.username = user_input
+            self.main_menu()
 
 
     def new_user_screen(self):
@@ -38,13 +43,36 @@ class Hangman:
         print("**                                                   **")
         print("**                                                   **")
         print('-------------------------------------------------------')
-        user_input = input("Input:")
-        #TODO: go to validator
+        username_input = input("Input:")
+        if UsernameValidator(username_input):
+            self.username = username_input
+            self.main_menu()
+        else:
+            self.username_taken_screen()
+
+    def username_taken_screen(self):
+        print('-------------------------------------------------------')
+        print("|                      OH NO :(                       |")
+        print('-------------------------------------------------------')
+        print("**                                                   **")
+        print("**                This username is taken             **")
+        print("**                                                   **")
+        print("**               Input another username!             **")
+        print("**                                                   **")
+        print("**                                                   **")
+        print("**                                                   **")
+        print('-------------------------------------------------------')
+        username_input = input("Input:")
+        if UsernameValidator(username_input):
+            self.username = username_input
+            self.main_menu()
+        else:
+            self.username_taken_screen()
 
     
-    def main_menu(self, username):
+    def main_menu(self):
         print('-------------------------------------------------------')
-        print("                     HI",username,"!                   ")
+        print("                     HI",self.username,"!                   ")
         print('-------------------------------------------------------')
         print("**                                                   **")
         print("**                   PLAY! : 'p'                     **")
@@ -59,13 +87,110 @@ class Hangman:
         if menu_input == "p":
             self.game_mode_menu()
         elif menu_input == "a":
-            self.game_mode_menu()
+            self.add_friend_menu()
         elif menu_input == "m":
-            self.game_mode_menu()
+            self.send_message_menu()
         elif menu_input == "l":
+            self.leaderboards_menu()
+        else:
+            self.main_menu()
+
+    def send_message_menu(self):
+        print('-------------------------------------------------------')
+        print("                    Message A Friend!                  ")
+        print('-------------------------------------------------------')
+        print("**                                                   **")
+        print("**                                                   **")
+        print("**               Input friend's username!            **")
+        print("**                                                   **")
+        print("**                  back: 'b'                        **")
+        print("**                                                   **")
+        print("**                                                   **")
+        print("**                                                   **")
+        print('-------------------------------------------------------')
+        message_input = input("Input:")
+        if message_input == "b":
+            self.main_menu()
+        # TODO: klara send message
+    
+    def leaderboards_menu(self):
+        print('-------------------------------------------------------')
+        print("                      LEADERBOARDS!                    ")
+        print('-------------------------------------------------------')
+        print("**                                                   **")
+        print("**                 No one else is here               **")
+        print("**                                                   **")
+        print("**                   So I guess..                    **")
+        print("**                                                   **")
+        print("**                  U ARE THE BEST!                  **")
+        print("**                                                   **")
+        print("**                    back: 'b'                      **")
+        print('-------------------------------------------------------')
+        message_input = input("Input:")
+        if message_input == "b":
+            self.main_menu()
+        # TODO: klara 
+
+    def add_friend_menu(self):
+        print('-------------------------------------------------------')
+        print("                     Add A new Friend!                 ")
+        print('-------------------------------------------------------')
+        print("**                                                   **")
+        print("**                                                   **")
+        print("**               Input friend's username!            **")
+        print("**                                                   **")
+        print("**                  back: 'b'                        **")
+        print("**                                                   **")
+        print("**                                                   **")
+        print("**                                                   **")
+        print('-------------------------------------------------------')
+        friend_username_input = input("Input:")
+        if friend_username_input == "b":
+            self.main_menu()
+        if UsernameValidator(friend_username_input):
+            self.friend_added_menu()
+        else:
+            self.friend_username_wrong_menu()
+
+    def friend_username_wrong_menu(self):
+        print('-------------------------------------------------------')
+        print("|                      OH NO :(                       |")
+        print('-------------------------------------------------------')
+        print("**                                                   **")
+        print("**                                                   **")
+        print("**              Friend's username not found!         **")
+        print("**                     Try again!                    **")
+        print("**                                                   **")
+        print("**                     back: 'b'                     **")
+        print("**                                                   **")
+        print("**                                                   **")
+        print('-------------------------------------------------------')
+        try_again_friend_username_input = input("Input:")
+        if try_again_friend_username_input == "b":
+            self.main_menu()
+        if UsernameValidator(try_again_friend_username_input):
+            self.friend_added_menu()
+        else:
+            self.friend_username_wrong_menu()
+
+    def friend_added_menu(self):
+        print('-------------------------------------------------------')
+        print("                  A new Friend ADDED!                  ")
+        print('-------------------------------------------------------')
+        print("**                                                   **")
+        print("**                 Play a game: 'p'                  **")
+        print("**                                                   **")
+        print("**                                                   **")
+        print("**               Back to main menu: 'm'              **")
+        print("**                                                   **")
+        print("**                                                   **")
+        print("**                                                   **")
+        print('-------------------------------------------------------')
+        the_input = input("Input:")
+        if the_input == "p":
             self.game_mode_menu()
         else:
-            self.main_menu(username)
+            self.main_menu()
 
 
     def game_mode_menu(self):
@@ -83,10 +208,10 @@ class Hangman:
         print('-------------------------------------------------------')
         game_input = input("Input:")
         if game_input == "n":
-            game_mode = "normal"
+            self.game_mode = "normal"
             self.category_menu()
         else:
-            game_mode = "competitive"
+            self.game_mode = "competitive"
             self.category_menu()
 
     def category_menu(self):
@@ -104,12 +229,16 @@ class Hangman:
         print('-------------------------------------------------------')
         category_input = input("Input:")
         if category_input == "a":
+            self.game_category = "animals"
             self.game_difficulty_menu()
         elif category_input == "c":
+            self.game_category = "countries"
             self.game_difficulty_menu()
         elif category_input == "f":
+            self.game_category = "food"
             self.game_difficulty_menu()
         elif category_input == "r":
+            self.game_category = "random"
             self.game_difficulty_menu()
         else:
             self.category_menu()
@@ -130,10 +259,13 @@ class Hangman:
         print('-------------------------------------------------------')
         difficulty_input = input("Input:")
         if difficulty_input == "e":
+            self.game_difficulty = "easy"
             self.play()
         elif difficulty_input == "m":
+            self.game_difficulty = "medium"
             self.play()
         elif difficulty_input == "h":
+            self.game_difficulty = "hard"
             self.play()
         else:
             self.game_difficulty_menu()
