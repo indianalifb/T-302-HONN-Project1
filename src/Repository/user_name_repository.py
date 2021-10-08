@@ -1,27 +1,35 @@
-from db_connection import DbConnection
+from typing import Optional
+from src.db_connections.db_config import DbConfig
+from src.Repository.db_connection import DbConnection
 import psycopg2
-import username_validator
+from src.username_validator import UsernameValidator
+from src.db_connections.postgres_db_connection import PostgresDbConnection
 
 class UserNameRepository:
-    def __init__(self, connection: DbConnection, validator = username_validator):
+    def __init__(self, connection : DbConnection, validator :UsernameValidator):
         self.__connection = connection
         self.validator = validator
 
     def save_username(self, username):
         if self.validator:
             self.__connection.execute(
-            "INSERT INTO Player (USERNAME) VALUES '{username}'")
+            f'''
+            INSERT INTO Player (USERNAME) VALUES '{username}'
+            ''')
             self.__connection.commit()
         else:
             None
 
     def get_username(self, username):
-        usernamedb = self.__connection.execute(
-        "SELECT username FROM Player WHERE username = '{username}'")
-        if len(usernamedb) == 0:
+        usernamedb = self.__connection.execute('''
+        "SELECT username FROM Player WHERE username = '{}'
+        '''.format(username))
+        if len(usernamedb) == 0:    
             return None
         else:
             return usernamedb[0]
+
+
 
 
 
