@@ -1,0 +1,36 @@
+CREATE DATABASE HANGMAN;
+
+CREATE TABLE Player(
+    user_ID SERIAL NOT NULL,
+    username VARCHAR(255) NOT NULL,
+    HighScore INT NULL,
+    PRIMARY KEY (user_id),
+    UNIQUE(username)
+);
+
+DROP TABLE IF EXISTS FRIENDS;
+CREATE TABLE Friends(
+    adder_id INT REFERENCES Player(user_ID) ON DELETE CASCADE,
+    reciever_id INT REFERENCES Player(user_ID) ON DELETE CASCADE,
+   PRIMARY KEY (adder_id, reciever_id) 
+);
+
+
+DROP TABLE IF EXISTS GAME;
+CREATE TABLE GAME(
+    game_id SERIAL NOT NULL,
+    player INT REFERENCES Player(user_ID),
+    category VARCHAR(100) NOT NULL,
+    difficulty VARCHAR(100) NOT NULL,
+    word VARCHAR(255) NOT NULL,
+    SCORE INT NOT NULL,
+    GUESSES INT NOT NULL,
+    MODE VARCHAR(100) NOT NULL
+ );
+
+CREATE OR REPLACE VIEW LEADERBOARD AS
+    SELECT username, HighScore
+    FROM Player
+    ORDER BY HighScore Desc
+    LIMIT 10;
+
