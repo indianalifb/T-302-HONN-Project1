@@ -1,6 +1,25 @@
 import random
-from player import Player
-from username_validator import UsernameValidator
+import os
+from src.db_connections.postgres_db_connection import PostgresDbConnection
+from src.player import Player
+from src.username_validator import UsernameValidator
+from src.Repository.db_connection import DbConnection
+
+def run_migrations(db_connection: DbConnection):
+    dir = './migrationsrcipts'
+    for filename in os.listdir(dir):
+        with open(f'{dir}/{filename}') as fileobj:
+            db_connection.execute(fileobj.read())
+        db_connection.commit()
+
+def create_postgres_db_config(settings: Settings):
+
+    return PostgresDbConnection(db_config=DbConfig(
+        host=settings.postgres_log_host,
+        user=settings.postgres_log_user,
+        password=settings.postgres_log_password,
+        database=settings.postgres_log_database
+        ))
 
 class Hangman:
     def __init__(self):
