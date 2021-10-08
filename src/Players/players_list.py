@@ -1,14 +1,19 @@
 from src.exceptions.invalid_number_exception import InvalidNumberException
 from src.Players.I_players import IPlayers
 from Repository.user_name_repository import UserNameRepository
+import username_validator
 
 
 class PlayersList(IPlayers):
-    def __init__(self, repository : UserNameRepository ):
+    def __init__(self, repository : UserNameRepository, validator: username_validator):
         self.repository = repository
+        self.validator = validator
 
     def add(self, name):
-        self.repository.save_username(name)
+        if self.validator:
+            self.repository.save_username(name)
+        else:
+            return None
 
     def lookup(self, name: str) -> str:
         validate_username = UserNameRepository.get_username(name)
