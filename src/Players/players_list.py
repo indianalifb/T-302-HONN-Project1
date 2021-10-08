@@ -1,5 +1,4 @@
-from src.exceptions.invalid_number_exception import InvalidNumberException
-from src.Players.I_players import IPlayers
+from Players.I_players import IPlayers
 
 
 class PlayersList(IPlayers):
