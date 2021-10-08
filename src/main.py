@@ -4,6 +4,8 @@ from src.db_connections.postgres_db_connection import PostgresDbConnection
 from src.player import Player
 from src.username_validator import UsernameValidator
 from src.Repository.db_connection import DbConnection
+from infrastructure.container import Container
+from Players.players_list import PlayersList
 
 def run_migrations(db_connection: DbConnection):
     dir = './migrationsrcipts'
@@ -23,6 +25,7 @@ def create_postgres_db_config(settings: Settings):
 
 class Hangman:
     def __init__(self):
+        container = Container()
         self.username = ""
         self.game_mode = ""
         self.game_difficulty = ""
@@ -47,7 +50,33 @@ class Hangman:
             self.new_user_screen()
         else:
             self.username = user_input
-            self.main_menu()
+            if PlayersList.lookup(user_input):
+                self.main_menu()
+            else:
+                self.wrong_username_menu()
+
+    def wrong_username_menu(self):
+        print('-------------------------------------------------------')
+        print("|                      OH NO :(                       |")
+        print('-------------------------------------------------------')
+        print("**                                                   **")
+        print("**                                                   **")
+        print("**                 Username not found!               **")
+        print("**                     Try again!                    **")
+        print("**                 Input your username               **")
+        print("**                                                   **")
+        print("**                   new member?: 'n'                **")
+        print("**                                                   **")
+        print('-------------------------------------------------------')
+        try_again_username_input = input("Input:")
+        if try_again_username_input == "n":
+            self.new_user_screen()
+        else:
+            self.username = try_again_username_input
+            if PlayersList.lookup(user_input):
+                self.main_menu()
+            else:
+                self.wrong_username_menu()
 
 
     def new_user_screen(self):
@@ -63,11 +92,37 @@ class Hangman:
         print("**                                                   **")
         print('-------------------------------------------------------')
         username_input = input("Input:")
-        if UsernameValidator(username_input):
-            self.username = username_input
-            self.main_menu()
+        if PlayersList.lookup(username_input):
+            if PlayersList.add(username_input) == None:
+                self.username_too_long_screen()
+            else:
+                self.username = username_input
+                self.main_menu()
         else:
             self.username_taken_screen()
+
+    def username_too_long_screen(self):
+        print('-------------------------------------------------------')
+        print("|                      OH NO :(                       |")
+        print('-------------------------------------------------------')
+        print("**                                                   **")
+        print("**                 Username too long!                **")
+        print("**                 Try a shorter one!                **")
+        print("**                  Input a username                 **")
+        print("**                                                   **")
+        print("**                                                   **")
+        print("**                                                   **")
+        print('-------------------------------------------------------')
+        username_input = input("Input:")
+        if PlayersList.lookup(username_input):
+            if PlayersList.add(username_input) == None:
+                self.username_too_long_screen()
+            else:
+                self.username = username_input
+                self.main_menu()
+        else:
+            self.username_taken_screen()
+
 
     def username_taken_screen(self):
         print('-------------------------------------------------------')
@@ -82,11 +137,15 @@ class Hangman:
         print("**                                                   **")
         print('-------------------------------------------------------')
         username_input = input("Input:")
-        if UsernameValidator(username_input):
-            self.username = username_input
-            self.main_menu()
+        if PlayersList.lookup(username_input):
+            if PlayersList.add(username_input) == None:
+                self.username_too_long_screen()
+            else:
+                self.username = username_input
+                self.main_menu()
         else:
             self.username_taken_screen()
+
 
     
     def main_menu(self):
