@@ -1,12 +1,14 @@
-from Players.I_players import IPlayers
+from src.exceptions.invalid_number_exception import InvalidNumberException
+from src.Players.I_players import IPlayers
+from Repository.user_name_repository import UserNameRepository
 
 
 class PlayersList(IPlayers):
-    def __init__(self):
-        pass
+    def __init__(self, repository : UserNameRepository ):
+        self.repository = repository
 
-    def add(self):
-        pass
+    def add(self, name):
+        self.repository.save_username(name)
 
     def lookup(self, name: str) -> str:
-        pass
+        self.repository.get_username(name)
