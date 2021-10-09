@@ -178,24 +178,6 @@ class Hangman:
         if message_input == "b":
             self.main_menu()
         # TODO: klara send message
-    
-
-    def leaderboards_menu(self):
-        leaders = self.leaderboard.get_leaders()
-        if leaders == None:
-            empty_leaderboards_menu()
-            return
-        else:
-            print('-------------------------------------------------------')
-            print("                      LEADERBOARDS!                    ")
-            print('-------------------------------------------------------')
-            print("**   Name                            Score           **")
-
-            for tup in leaders:
-                print("** {0:30}    {1:<16}**".format(tup[0], tup[1]))
-        
-            print("**                    back: 'b'                      **")
-            print('-------------------------------------------------------')
 
     def empty_leaderboards_menu(self):
         print('-------------------------------------------------------')
@@ -214,6 +196,26 @@ class Hangman:
         if message_input == "b":
             self.main_menu()
         # TODO: klara 
+   
+    def leaderboards_menu(self):
+        leaders = self.leaderboard.get_leaders()
+        if leaders == None:
+            self.empty_leaderboards_menu()
+            return
+        else:
+            print('-------------------------------------------------------')
+            print("                      LEADERBOARDS!                    ")
+            print('-------------------------------------------------------')
+            print("**   Name                            Score           **")
+
+            for tup in leaders:
+                print("** {0:30}    {1:<16}**".format(tup[0], tup[1]))
+        
+            print("**                    back: 'b'                      **")
+            print('-------------------------------------------------------')
+            message_input = input("Input:")
+            if message_input == 'b':
+                self.main_menu()
 
     def add_friend_menu(self):
         print('-------------------------------------------------------')
