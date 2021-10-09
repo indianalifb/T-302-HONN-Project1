@@ -8,14 +8,14 @@ from src.Repository.db_connection import DbConnection
 from src.Players.players_list import PlayersList
 from src.GameMode.normal_gamemode import NormalGameMode
 from src.GameMode.competitive_gamemode import CompetitiveGameMode
-from src.game_elements import GameElements
 from src.leaders.leaders import LeaderBoard 
 from src.infrastructure.settings import Settings
 from src.db_connections.db_config import DbConfig
+from src.game_play import GamePLay
 
 
 class Hangman:
-    def __init__(self, player_list: PlayersList, leaderboard: LeaderBoard, game_play: GamePlayy):
+    def __init__(self, player_list: PlayersList, leaderboard: LeaderBoard, game_play: GamePLay):
         self.username = ""
         self.game_mode = ""
         self.game_difficulty = ""
