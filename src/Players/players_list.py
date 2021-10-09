@@ -15,7 +15,7 @@ class PlayersList(IPlayers):
             return None
 
     def lookup(self, name: str) -> str:
-        validate_username = UserNameRepository.get_username(name)
+        validate_username = self.repository.get_username(name)
         if validate_username == None:
             return False
         else:
