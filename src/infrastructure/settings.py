@@ -5,18 +5,18 @@ class ContainerSettingEnum(Enum):
     def get(self, *argv):
         return self.value
 
-    class Environment(ContainerSettingEnum):
-        DEV = 'dev'
-        PROD = 'prod'
+class Environment(ContainerSettingEnum):
+    DEV = 'dev'
+    PROD = 'prod'
 
-    class Settings(BaseSettings):
-        posgres_log_host: str
-        postgres_log_database: str
-        postgres_log_user: str
-        postgres_log_password: str
+class Settings(BaseSettings):
+    posgres_log_host: str
+    postgres_log_database: str
+    postgres_log_user: str
+    postgres_log_password: str
 
-        environment: Environment
+    environment: Environment
 
-    class Config:
-        env_file = '.env'
-        env_file_encoding = 'utf-8'
+class Config:
+    env_file = '.env'
+    env_file_encoding = 'utf-8'

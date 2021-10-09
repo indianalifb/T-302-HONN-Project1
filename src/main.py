@@ -4,8 +4,10 @@ from src.db_connections.postgres_db_connection import PostgresDbConnection
 from src.player import Player
 from src.username_validator import UsernameValidator
 from src.Repository.db_connection import DbConnection
-from infrastructure.container import Container
-from Players.players_list import PlayersList
+from src.infrastructure.container import Container
+from src.Players.players_list import PlayersList
+from src.infrastructure.settings import Settings
+from src.db_connections.db_config import DbConfig
 
 def run_migrations(db_connection: DbConnection):
     dir = './migrationsrcipts'
@@ -26,6 +28,8 @@ def create_postgres_db_config(settings: Settings):
 class Hangman:
     def __init__(self):
         container = Container()
+        self.Player_list = container.player_list
+        container.config.from_pydantic(Settings(_env_file='src/infrastructure/.env'))
         self.username = ""
         self.game_mode = ""
         self.game_difficulty = ""
@@ -55,7 +59,7 @@ class Hangman:
             else:
                 self.wrong_username_menu()
 
-    def wrong_username_menu(self):
+    def wrong_username_menu(self, player_list: PlayersList):
         print('-------------------------------------------------------')
         print("|                      OH NO :(                       |")
         print('-------------------------------------------------------')
@@ -70,16 +74,16 @@ class Hangman:
         print('-------------------------------------------------------')
         try_again_username_input = input("Input:")
         if try_again_username_input == "n":
-            self.new_user_screen()
+            self.new_user_screen(self.Player_list)
         else:
             self.username = try_again_username_input
-            if PlayersList.lookup(user_input):
+            if player_list.lookup(try_again_username_input):
                 self.main_menu()
             else:
                 self.wrong_username_menu()
 
 
-    def new_user_screen(self):
+    def new_user_screen(self, player_list: PlayersList ):
         print('-------------------------------------------------------')
         print("|                !WELCOME TO HANGMAN!                 |")
         print('-------------------------------------------------------')
@@ -92,16 +96,16 @@ class Hangman:
         print("**                                                   **")
         print('-------------------------------------------------------')
         username_input = input("Input:")
-        if PlayersList.lookup(username_input):
-            if PlayersList.add(username_input) == None:
-                self.username_too_long_screen()
+        if player_list.lookup(username_input):
+            if player_list.add(username_input) == None:
+                self.username_too_long_screen(self.Player_list)
             else:
                 self.username = username_input
                 self.main_menu()
         else:
-            self.username_taken_screen()
+            self.username_taken_screen(self.Player_list)
 
-    def username_too_long_screen(self):
+    def username_too_long_screen(self, player_list: PlayersList):
         print('-------------------------------------------------------')
         print("|                      OH NO :(                       |")
         print('-------------------------------------------------------')
@@ -114,8 +118,8 @@ class Hangman:
         print("**                                                   **")
         print('-------------------------------------------------------')
         username_input = input("Input:")
-        if PlayersList.lookup(username_input):
-            if PlayersList.add(username_input) == None:
+        if player_list.lookup(username_input):
+            if player_list.add(username_input) == None:
                 self.username_too_long_screen()
             else:
                 self.username = username_input
@@ -124,7 +128,7 @@ class Hangman:
             self.username_taken_screen()
 
 
-    def username_taken_screen(self):
+    def username_taken_screen(self, player_list: PlayersList):
         print('-------------------------------------------------------')
         print("|                      OH NO :(                       |")
         print('-------------------------------------------------------')
@@ -137,8 +141,8 @@ class Hangman:
         print("**                                                   **")
         print('-------------------------------------------------------')
         username_input = input("Input:")
-        if PlayersList.lookup(username_input):
-            if PlayersList.add(username_input) == None:
+        if player_list.lookup(username_input):
+            if player_list.add(username_input) == None:
                 self.username_too_long_screen()
             else:
                 self.username = username_input
@@ -150,7 +154,7 @@ class Hangman:
     
     def main_menu(self):
         print('-------------------------------------------------------')
-        print("                     HI",self.username,"!                   ")
+        print("                     HI",self.username,"!              ")
         print('-------------------------------------------------------')
         print("**                                                   **")
         print("**                   PLAY! : 'p'                     **")

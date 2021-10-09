@@ -6,6 +6,8 @@ from Players.players_list import PlayersList
 from Repository.user_name_repository import UserNameRepository
 from username_validator import UsernameValidator
 from db_connections.db_config import DbConfig
+from infrastructure.settings import Settings
+from db_connections.postgres_db_connection import PostgresDbConnection
 
 class Container(containers.DeclarativeContainer):
     config: Settings = providers.Configuration()
