@@ -10,6 +10,10 @@ from src.username_validator import UsernameValidator
 from src.db_connections.db_config import DbConfig
 from src.infrastructure.settings import Settings
 from src.db_connections.postgres_db_connection import PostgresDbConnection
+from src.game_play import GamePLay
+from src.reader import Difficulty, Reader
+from src.game_play import GamePLay
+from src.GameMode.normal_gamemode import NormalGameMode
 
 class Container(containers.DeclarativeContainer):
     config: Settings = providers.Configuration()
@@ -61,8 +65,20 @@ class Container(containers.DeclarativeContainer):
         player_list = player_list
     )
 
+
+    reader = providers.Singleton(
+        Reader,
+    )
+
+
+    game_play = providers.Singleton(
+        GamePLay,
+        reader = reader
+    )
+
     hangman = providers.Singleton(
         Hangman,
         player_list = player_list,
+        game_play = game_play,
         leaderboard = leaderboard
     )

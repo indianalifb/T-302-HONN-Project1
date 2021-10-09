@@ -1,22 +1,27 @@
 import random
 import os
+from src.game_play import GamePLay
 from src.db_connections.postgres_db_connection import PostgresDbConnection
 from src.player import Player
 from src.username_validator import UsernameValidator
 from src.Repository.db_connection import DbConnection
 from src.Players.players_list import PlayersList
-from src.leaders.leaders import LeaderBoard 
+from src.GameMode.normal_gamemode import NormalGameMode
+from src.GameMode.competitive_gamemode import CompetitiveGameMode
+from src.game_elements import GameElements
+rom src.leaders.leaders import LeaderBoard 
 from src.infrastructure.settings import Settings
 from src.db_connections.db_config import DbConfig
 
 
 class Hangman:
-    def __init__(self, player_list: PlayersList, leaderboard: LeaderBoard):
+    def __init__(self, player_list: PlayersList, leaderboard: LeaderBoard, game_play: GamePlayy):
         self.username = ""
         self.game_mode = ""
         self.game_difficulty = ""
         self.game_category = ""
         self.player_list = player_list
+        self.game_play = game_play
         self.leaderboard = leaderboard
 
 
@@ -309,22 +314,19 @@ class Hangman:
         print("**                    Countries: 'c'                 **")
         print("**                    Food: 'f'                      **")
         print("**                                                   **")
-        print("**                    Random: 'r'                    **")
+        print("**                                                   **")
         print("**                                                   **")
         print("**                                                   **")
         print('-------------------------------------------------------')
         category_input = input("Input:")
         if category_input == "a":
-            self.game_category = "animals"
+            self.game_category = "a"
             self.game_difficulty_menu()
         elif category_input == "c":
-            self.game_category = "countries"
+            self.game_category = "c"
             self.game_difficulty_menu()
         elif category_input == "f":
-            self.game_category = "food"
-            self.game_difficulty_menu()
-        elif category_input == "r":
-            self.game_category = "random"
+            self.game_category = "f"
             self.game_difficulty_menu()
         else:
             self.category_menu()
@@ -345,24 +347,20 @@ class Hangman:
         print('-------------------------------------------------------')
         difficulty_input = input("Input:")
         if difficulty_input == "e":
-            self.game_difficulty = "easy"
-            self.play()
+            self.game_difficulty = "e"
+            self.play_game()
         elif difficulty_input == "m":
-            self.game_difficulty = "medium"
-            self.play()
+            self.game_difficulty = "m"
+            self.play_game()
         elif difficulty_input == "h":
-            self.game_difficulty = "hard"
-            self.play()
+            self.game_difficulty = "h"
+            self.play_game()
         else:
             self.game_difficulty_menu()
 
-    def play():
-        pass
-
-
-
-
-
-if __name__ == '__main__':
-    game = Hangman()
-    game.welcome_screen()
+    def play_game(self):
+        GameElements(self.game_difficulty, self.game_category)
+        if self.game_mode == "normal":
+            self.game_play.play(NormalGameMode(), self.game_difficulty, self.game_category)
+        else:
+            self.game_play.play(CompetitiveGameMode(), self.game_difficulty, self.game_category)
