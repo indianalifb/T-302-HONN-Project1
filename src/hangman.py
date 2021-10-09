@@ -9,7 +9,7 @@ from src.Players.players_list import PlayersList
 from src.GameMode.normal_gamemode import NormalGameMode
 from src.GameMode.competitive_gamemode import CompetitiveGameMode
 from src.game_elements import GameElements
-rom src.leaders.leaders import LeaderBoard 
+from src.leaders.leaders import LeaderBoard 
 from src.infrastructure.settings import Settings
 from src.db_connections.db_config import DbConfig
 
@@ -201,7 +201,7 @@ class Hangman:
         if message_input == "b":
             self.main_menu()
         # TODO: klara 
-   
+
     def leaderboards_menu(self):
         leaders = self.leaderboard.get_leaders()
         if leaders == None:
