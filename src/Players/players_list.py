@@ -1,21 +1,22 @@
 from src.Players.I_players import IPlayers
-from Repository.user_name_repository import UserNameRepository
-import username_validator
+from src.Repository.user_name_repository import UserNameRepository
+from src.username_validator import UsernameValidator
 
 
 class PlayersList(IPlayers):
-    def __init__(self, repository : UserNameRepository, validator: username_validator):
+    def __init__(self, repository : UserNameRepository, validator: UsernameValidator):
         self.repository = repository
         self.validator = validator
 
     def add(self, name):
         if self.validator:
             self.repository.save_username(name)
+            return True
         else:
-            return None
+            return False
 
     def lookup(self, name: str) -> str:
-        validate_username = UserNameRepository.get_username(name)
+        validate_username = self.repository.get_username(name)
         if validate_username == None:
             return False
         else:

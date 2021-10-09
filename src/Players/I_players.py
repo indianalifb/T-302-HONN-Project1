@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 
 class IPlayers(ABC):
     @abstractmethod
-    def add(self) -> None:
+    def add(self, name: str) -> bool:
         pass
 
     @abstractmethod

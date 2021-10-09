@@ -14,16 +14,16 @@ class UserNameRepository:
         if self.validator:
             self.__connection.execute(
             f'''
-            INSERT INTO Player (USERNAME) VALUES '{username}'
+            INSERT INTO player (username,highscore) VALUES ('{username}', {0})
             ''')
             self.__connection.commit()
         else:
             None
 
     def get_username(self, username):
-        usernamedb = self.__connection.execute('''
-        "SELECT username FROM Player WHERE username = '{}'
-        '''.format(username))
+        usernamedb = self.__connection.execute(f'''
+        SELECT username FROM Player WHERE username = '{username}'
+        ''')
         if len(usernamedb) == 0:    
             return None
         else:
