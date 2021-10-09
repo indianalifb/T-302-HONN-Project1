@@ -359,7 +359,6 @@ class Hangman:
             self.game_difficulty_menu()
 
     def play_game(self):
-        GameElements(self.game_difficulty, self.game_category)
         if self.game_mode == "normal":
             self.game_play.play(NormalGameMode(), self.game_difficulty, self.game_category)
         else:
