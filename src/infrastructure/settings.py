@@ -10,7 +10,7 @@ class Environment(ContainerSettingEnum):
     PROD = 'prod'
 
 class Settings(BaseSettings):
-    posgres_log_host: str
+    postgres_log_host: str
     postgres_log_database: str
     postgres_log_user: str
     postgres_log_password: str

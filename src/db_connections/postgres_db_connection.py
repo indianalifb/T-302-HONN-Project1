@@ -3,7 +3,7 @@ from typing import List
 import psycopg2 as psycopg2
 
 from src.db_connections.db_config import DbConfig
-from src.repositories.db_connection import DbConnection
+from src.Repository.db_connection import DbConnection
 
 
 class PostgresDbConnection(DbConnection):

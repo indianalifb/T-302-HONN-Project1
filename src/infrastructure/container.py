@@ -1,20 +1,21 @@
 from dependency_injector import containers, providers
 from dependency_injector.wiring import inject, Provide
-from player import Player
-from message_sender import MessageSender
-from Players.players_list import PlayersList
-from Repository.user_name_repository import UserNameRepository
-from username_validator import UsernameValidator
-from db_connections.db_config import DbConfig
-from infrastructure.settings import Settings
-from db_connections.postgres_db_connection import PostgresDbConnection
+from src.hangman import Hangman
+from src.player import Player
+from src.message_sender import MessageSender
+from src.Players.players_list import PlayersList
+from src.Repository.user_name_repository import UserNameRepository
+from src.username_validator import UsernameValidator
+from src.db_connections.db_config import DbConfig
+from src.infrastructure.settings import Settings
+from src.db_connections.postgres_db_connection import PostgresDbConnection
 
 class Container(containers.DeclarativeContainer):
     config: Settings = providers.Configuration()
 
     postgres_db_config = providers.Singleton(
         DbConfig,
-        host=config.posgres_log_host,
+        host=config.postgres_log_host,
         user=config.postgres_log_user,
         database=config.postgres_log_database,
         password=config.postgres_log_password)
@@ -27,20 +28,21 @@ class Container(containers.DeclarativeContainer):
         )
     )
 
-    username_validator = providers.Singleton(
+    validator = providers.Singleton(
         UsernameValidator
     )
 
-    username_repository = providers.Singleton(
+    repository = providers.Singleton(
         UserNameRepository,
-        connection = db_connection_provider
+        connection = db_connection_provider,
+        validator = validator,
     )
 
 
     player_list = providers.Singleton(
         PlayersList,
-        username_repository = username_repository,
-        validator = username_validator,
+        repository = repository,
+        validator = validator,
     )
 
     message_sender = providers.Singleton(
@@ -52,4 +54,9 @@ class Container(containers.DeclarativeContainer):
         Player,
         message_sender = message_sender,
         player_list = player_list
+    )
+
+    hangman = providers.Singleton(
+        Hangman,
+        player_list = player_list,
     )
