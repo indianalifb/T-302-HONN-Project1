@@ -5,6 +5,7 @@ from src.player import Player
 from src.message_sender import MessageSender
 from src.Players.players_list import PlayersList
 from src.Repository.user_name_repository import UserNameRepository
+from src.Repository.leader_board_repository import LeaderBoardRepository
 from src.username_validator import UsernameValidator
 from src.db_connections.db_config import DbConfig
 from src.infrastructure.settings import Settings
@@ -42,6 +43,10 @@ class Container(containers.DeclarativeContainer):
         validator = validator,
     )
 
+    leaderboard = providers.Singleton(
+            LeaderBoardRepository,
+            connection = db_connection_provider
+            )
 
     player_list = providers.Singleton(
         PlayersList,
@@ -75,4 +80,5 @@ class Container(containers.DeclarativeContainer):
         Hangman,
         player_list = player_list,
         game_play = game_play,
+        leaderboard = leaderboard
     )

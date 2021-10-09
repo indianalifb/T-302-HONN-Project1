@@ -9,16 +9,20 @@ from src.Players.players_list import PlayersList
 from src.GameMode.normal_gamemode import NormalGameMode
 from src.GameMode.competitive_gamemode import CompetitiveGameMode
 from src.game_elements import GameElements
+rom src.leaders.leaders import LeaderBoard 
+from src.infrastructure.settings import Settings
+from src.db_connections.db_config import DbConfig
 
 
 class Hangman:
-    def __init__(self, player_list: PlayersList, game_play: GamePLay):
+    def __init__(self, player_list: PlayersList, leaderboard: LeaderBoard, game_play: GamePlayy):
         self.username = ""
         self.game_mode = ""
         self.game_difficulty = ""
         self.game_category = ""
         self.player_list = player_list
         self.game_play = game_play
+        self.leaderboard = leaderboard
 
 
     def welcome_screen(self):
@@ -179,8 +183,8 @@ class Hangman:
         if message_input == "b":
             self.main_menu()
         # TODO: klara send message
-    
-    def leaderboards_menu(self):
+
+    def empty_leaderboards_menu(self):
         print('-------------------------------------------------------')
         print("                      LEADERBOARDS!                    ")
         print('-------------------------------------------------------')
@@ -197,6 +201,26 @@ class Hangman:
         if message_input == "b":
             self.main_menu()
         # TODO: klara 
+   
+    def leaderboards_menu(self):
+        leaders = self.leaderboard.get_leaders()
+        if leaders == None:
+            self.empty_leaderboards_menu()
+            return
+        else:
+            print('-------------------------------------------------------')
+            print("                      LEADERBOARDS!                    ")
+            print('-------------------------------------------------------')
+            print("**   Name                            Score           **")
+
+            for tup in leaders:
+                print("** {0:30}    {1:<16}**".format(tup[0], tup[1]))
+        
+            print("**                    back: 'b'                      **")
+            print('-------------------------------------------------------')
+            message_input = input("Input:")
+            if message_input == 'b':
+                self.main_menu()
 
     def add_friend_menu(self):
         print('-------------------------------------------------------')
