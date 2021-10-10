@@ -38,15 +38,19 @@ class Container(containers.DeclarativeContainer):
         UsernameValidator
     )
 
-    friend_validator = providers.Singleton(
-        FriendValidator
-    )
-
     repository = providers.Singleton(
         UserNameRepository,
         connection = db_connection_provider,
         validator = validator,
     )
+
+    friend_validator = providers.Singleton(
+        FriendValidator,
+        repo = UserNameRepository,
+        connection=db_connection_provider,
+        validator=validator
+    )
+
 
     leaderboard = providers.Singleton(
             LeaderBoardRepository,
