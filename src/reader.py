@@ -14,19 +14,19 @@ class Difficulty(Enum):
 class Reader:
     '''Reader takes no arguments to initialize'''
 
+
     def get_words(self, cat, diff):
         '''Call function with category letter for ex. "A" for animals,
             and difficulty letter ex. "m" for medium'''
-       # If category chosen is random we chose a random category
-       if cat == 'R':
+        # If category chosen is random we chose a random category
+        if cat == 'R':
             cat = choice(list(Category)).value
         else:
             cat = Category[cat.upper()].value
-       
 
         diff = Difficulty[diff.upper()].value
 
-        filename = "WordData/{}/{}{}.txt".format(cat, diff, cat.lower())
+        filename = "src/WordData/{}/{}{}.txt".format(cat, diff, cat.lower())
 
         try:
             with open(filename, 'r') as f:
@@ -37,7 +37,7 @@ class Reader:
             print("File not found") 
             None
 
-if __name__ == "__main__":
-    read = Reader()
-    word = read.get_words("a", "m")
-    print(word)
+# if __name__ == "__main__":
+#     read = Reader()
+#     word = read.get_words("a", "m")
+#     print(word)

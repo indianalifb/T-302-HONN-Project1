@@ -1,21 +1,28 @@
 import random
 import os
+from src.game_play import GamePLay
 from src.db_connections.postgres_db_connection import PostgresDbConnection
 from src.player import Player
 from src.username_validator import UsernameValidator
 from src.Repository.db_connection import DbConnection
 from src.Players.players_list import PlayersList
+from src.GameMode.normal_gamemode import NormalGameMode
+from src.GameMode.competitive_gamemode import CompetitiveGameMode
+from src.leaders.leaders import LeaderBoard 
 from src.infrastructure.settings import Settings
 from src.db_connections.db_config import DbConfig
+from src.game_play import GamePLay
 
 
 class Hangman:
-    def __init__(self, player_list: PlayersList):
+    def __init__(self, player_list: PlayersList, leaderboard: LeaderBoard, game_play: GamePLay):
         self.username = ""
         self.game_mode = ""
         self.game_difficulty = ""
         self.game_category = ""
         self.player_list = player_list
+        self.game_play = game_play
+        self.leaderboard = leaderboard
 
 
     def welcome_screen(self):
@@ -176,8 +183,8 @@ class Hangman:
         if message_input == "b":
             self.main_menu()
         # TODO: klara send message
-    
-    def leaderboards_menu(self):
+
+    def empty_leaderboards_menu(self):
         print('-------------------------------------------------------')
         print("                      LEADERBOARDS!                    ")
         print('-------------------------------------------------------')
@@ -194,6 +201,26 @@ class Hangman:
         if message_input == "b":
             self.main_menu()
         # TODO: klara 
+
+    def leaderboards_menu(self):
+        leaders = self.leaderboard.get_leaders()
+        if leaders == None:
+            self.empty_leaderboards_menu()
+            return
+        else:
+            print('-------------------------------------------------------')
+            print("                      LEADERBOARDS!                    ")
+            print('-------------------------------------------------------')
+            print("**   Name                            Score           **")
+
+            for tup in leaders:
+                print("** {0:30}    {1:<16}**".format(tup[0], tup[1]))
+        
+            print("**                    back: 'b'                      **")
+            print('-------------------------------------------------------')
+            message_input = input("Input:")
+            if message_input == 'b':
+                self.main_menu()
 
     def add_friend_menu(self):
         print('-------------------------------------------------------')
@@ -287,22 +314,19 @@ class Hangman:
         print("**                    Countries: 'c'                 **")
         print("**                    Food: 'f'                      **")
         print("**                                                   **")
-        print("**                    Random: 'r'                    **")
+        print("**                                                   **")
         print("**                                                   **")
         print("**                                                   **")
         print('-------------------------------------------------------')
         category_input = input("Input:")
         if category_input == "a":
-            self.game_category = "animals"
+            self.game_category = "a"
             self.game_difficulty_menu()
         elif category_input == "c":
-            self.game_category = "countries"
+            self.game_category = "c"
             self.game_difficulty_menu()
         elif category_input == "f":
-            self.game_category = "food"
-            self.game_difficulty_menu()
-        elif category_input == "r":
-            self.game_category = "random"
+            self.game_category = "f"
             self.game_difficulty_menu()
         else:
             self.category_menu()
@@ -323,24 +347,19 @@ class Hangman:
         print('-------------------------------------------------------')
         difficulty_input = input("Input:")
         if difficulty_input == "e":
-            self.game_difficulty = "easy"
-            self.play()
+            self.game_difficulty = "e"
+            self.play_game()
         elif difficulty_input == "m":
-            self.game_difficulty = "medium"
-            self.play()
+            self.game_difficulty = "m"
+            self.play_game()
         elif difficulty_input == "h":
-            self.game_difficulty = "hard"
-            self.play()
+            self.game_difficulty = "h"
+            self.play_game()
         else:
             self.game_difficulty_menu()
 
-    def play():
-        pass
-
-
-
-
-
-if __name__ == '__main__':
-    game = Hangman()
-    game.welcome_screen()
+    def play_game(self):
+        if self.game_mode == "normal":
+            self.game_play.play(NormalGameMode(), self.game_difficulty, self.game_category)
+        else:
+            self.game_play.play(CompetitiveGameMode(), self.game_difficulty, self.game_category)
