@@ -32,7 +32,7 @@ class Reader:
             with open(filename, 'r') as f:
                 words = [line.strip() for line in f]
             
-            return words[randint(0, len(words))]
+            return words[randint(0, len(words)-1)]
         except FileNotFoundError:
             print("File not found") 
             None

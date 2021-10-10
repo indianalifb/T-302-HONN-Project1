@@ -8,6 +8,7 @@ from src.infrastructure.container import Container
 from src.Players.players_list import PlayersList
 from src.infrastructure.settings import Settings
 from src.db_connections.db_config import DbConfig
+from src.GameState.IState import IState
 
 def run_migrations(db_connection: DbConnection):
     dir = './migrationsrcipts'
