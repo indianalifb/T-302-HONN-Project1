@@ -14,6 +14,12 @@ from src.game_play import GamePLay
 from src.reader import Difficulty, Reader
 from src.game_play import GamePLay
 from src.GameMode.normal_gamemode import NormalGameMode
+from src.GameState.correctGuessState import CorrectGuessState
+from src.GameState.holdingState import HoldingState
+from src.GameState.incorrectGuessState import IncorrectGuessState
+from src.GameState.lostState import LostState
+from src.GameState.repeatedGuessState import RepeatedGuessState
+from src.GameState.wonState import WonState
 from src.friend_validator import FriendValidator
 
 class Container(containers.DeclarativeContainer):
@@ -79,10 +85,39 @@ class Container(containers.DeclarativeContainer):
         Reader,
     )
 
+    correct_guess_state = providers.Singleton(
+        CorrectGuessState,
+    )
+
+    holding_state = providers.Singleton(
+        HoldingState,
+    )
+
+    incorrect_guess_state = providers.Singleton(
+        IncorrectGuessState,
+    )
+
+    lost_state = providers.Singleton(
+        LostState,
+    )
+
+    repeated_guess_state = providers.Singleton(
+        RepeatedGuessState,
+    )
+
+    won_state = providers.Singleton(
+        WonState,
+    )
 
     game_play = providers.Singleton(
         GamePLay,
-        reader = reader
+        reader = reader,
+        won_state = won_state,
+        repeated_guess_state = repeated_guess_state,
+        lost_state = lost_state,
+        incorrect_guess_state = incorrect_guess_state,
+        holding_state = holding_state,
+        correct_guess_state = correct_guess_state
     )
 
     hangman = providers.Singleton(
