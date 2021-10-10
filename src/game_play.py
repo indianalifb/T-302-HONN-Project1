@@ -58,8 +58,7 @@ class GamePLay:
 
     def process(self, letter):
         """Requests the state to process the guessed letter.
-
-        The State takes care of updating the lives, guessed_letters and providing a
+        The State takes care of updating the , guessed_letters and providing a
         message for the gameplay"""
         self.__state.process(letter, self)
         self.__state.process(letter,self)
@@ -131,7 +130,7 @@ class GamePLay:
 
 
     def lost(self):
-        """Tests if we have run out of lives"""
+        """Tests if we have run out of guesses"""
         return self.number_of_guesses <= 0
 
 
