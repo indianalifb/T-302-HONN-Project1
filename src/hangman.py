@@ -1,7 +1,10 @@
 import random
 import os
+
+from src.friend_validator import FriendValidator
 from src.game_play import GamePLay
 from src.db_connections.postgres_db_connection import PostgresDbConnection
+from src.message_sender import MessageSender
 from src.player import Player
 from src.username_validator import UsernameValidator
 from src.Repository.db_connection import DbConnection
@@ -15,7 +18,7 @@ from src.game_play import GamePLay
 
 
 class Hangman:
-    def __init__(self, player_list: PlayersList, leaderboard: LeaderBoard, game_play: GamePLay):
+    def __init__(self, player_list: PlayersList, leaderboard: LeaderBoard, game_play: GamePLay, player: Player, message_sender: MessageSender, username_validator: UsernameValidator, friend_validator: FriendValidator):
         self.username = ""
         self.game_mode = ""
         self.game_difficulty = ""
@@ -23,6 +26,10 @@ class Hangman:
         self.player_list = player_list
         self.game_play = game_play
         self.leaderboard = leaderboard
+        self.message_sender = message_sender
+        self.player = player
+        self.username_validator = username_validator
+        self.friend_validator = friend_validator
 
 
     def welcome_screen(self):
@@ -160,13 +167,13 @@ class Hangman:
         elif menu_input == "a":
             self.add_friend_menu()
         elif menu_input == "m":
-            self.send_message_menu()
+            self.send_message_menu_friend_input()
         elif menu_input == "l":
             self.leaderboards_menu()
         else:
             self.main_menu()
 
-    def send_message_menu(self):
+    def send_message_menu_friend_input(self):
         print('-------------------------------------------------------')
         print("                    Message A Friend!                  ")
         print('-------------------------------------------------------')
@@ -179,10 +186,55 @@ class Hangman:
         print("**                                                   **")
         print("**                                                   **")
         print('-------------------------------------------------------')
+        friend_input = input("Input:")
+        if friend_input == "b":
+            self.main_menu()
+        if (self.username_validator.validate(friend_input) and
+                self.friend_validator.validate(self.username, friend_input) or
+                self.friend_validator.validate(friend_input, self.username)):
+
+            self.send_message_menu_message_input(friend_input)
+
+        else:
+            self.friend_not_found_menu(friend_input)
+
+    def friend_not_found_menu(self, friend_name):
+        print('-------------------------------------------------------')
+        print("                    Message A Friend!                  ")
+        print('-------------------------------------------------------')
+        print("**                                                   **")
+        print("**                                                   **")
+        print("**               Username not found                  **")
+        print("**                                                   **")
+        print("**                  back: 'b'                        **")
+        print("**                                                   **")
+        print("**                                                   **")
+        print("**                                                   **")
+        print('-------------------------------------------------------')
+        user_input = input("Input:")
+        if user_input == 'b':
+            self.send_message_menu_friend_input()
+
+
+    def send_message_menu_message_input(self, friend_name):
+        print('-------------------------------------------------------')
+        print("                    Message A Friend!                  ")
+        print('-------------------------------------------------------')
+        print("**                                                   **")
+        print("**                                                   **")
+        print("**               Input your message!                 **")
+        print("**                                                   **")
+        print("**                  back: 'b'                        **")
+        print("**                                                   **")
+        print("**                                                   **")
+        print("**                                                   **")
+        print('-------------------------------------------------------')
         message_input = input("Input:")
         if message_input == "b":
             self.main_menu()
-        # TODO: klara send message
+        else:
+            self.player.send_message(friend_name, message_input)
+            self.main_menu()
 
     def empty_leaderboards_menu(self):
         print('-------------------------------------------------------')
@@ -238,7 +290,8 @@ class Hangman:
         friend_username_input = input("Input:")
         if friend_username_input == "b":
             self.main_menu()
-        if UsernameValidator(friend_username_input):
+        if self.username_validator.validate(friend_username_input):
+            self.player.add_friend(self.username, friend_username_input)
             self.friend_added_menu()
         else:
             self.friend_username_wrong_menu()

@@ -1,5 +1,85 @@
 from src.drawings_catagories.ICountries import ICountries
+from colorama import init
+from colorama import Fore, Back, Style
+
 
 class CountriesCompetitive(ICountries):
-    def draw_countries():
-        pass
+    def draw_countries(self,number):
+        counries_list =[
+            [Fore.BLUE + "#              "+ Fore.WHITE +"                   I" + Fore.BLUE +"               #",
+            Fore.BLUE + "#              "+ Fore.WHITE +"                   |" + Fore.BLUE +"               #",
+            Fore.BLUE + "#              "+ Fore.WHITE +"                   |" + Fore.BLUE +"               #",
+            Fore.BLUE + "#              "+ Fore.WHITE +"                   |" + Fore.BLUE +"               #",
+            Fore.BLUE + "#              "+ Fore.WHITE +"                   |" + Fore.BLUE +"               #",
+            Fore.BLUE + "#              "+ Fore.WHITE +"                   |" + Fore.BLUE +"               #",
+            Fore.BLUE + "#              "+ Fore.WHITE +"                   |" + Fore.BLUE +"               #",
+            Fore.BLUE + "#              "+ Fore.WHITE +"     #####$|$#####/|" + Fore.BLUE +"               #",
+            Fore.BLUE + "#              "+ Fore.WHITE +"     $$$$$$|$$$$$$ |" + Fore.BLUE +"               #",
+            Fore.BLUE + "#               "+ Fore.WHITE +"===================" + Fore.BLUE +"               #"],
+            [Fore.BLUE + "#              "+ Fore.WHITE +"                   I" + Fore.BLUE +"               #",
+            Fore.BLUE + "#              "+ Fore.WHITE +"                   |" + Fore.BLUE +"               #",
+            Fore.BLUE + "#              "+ Fore.WHITE +"                   |" + Fore.BLUE +"               #",
+            Fore.BLUE + "#              "+ Fore.WHITE +"                   |" + Fore.BLUE +"               #",
+            Fore.BLUE + "#              "+ Fore.WHITE +"                   |" + Fore.BLUE +"               #",
+            Fore.BLUE + "#              "+ Fore.WHITE +"                   |" + Fore.BLUE +"               #",
+            Fore.BLUE + "#              "+ Fore.WHITE +"     #####$|$#####/|" + Fore.BLUE +"               #",
+            Fore.BLUE + "#              "+ Fore.WHITE +"     $$$$$$|$$$$$$ |" + Fore.BLUE +"               #",
+            Fore.BLUE + "#              "+ Fore.WHITE +"     ------+------ |" + Fore.BLUE +"               #",
+            Fore.BLUE + "#               "+ Fore.WHITE +"===================" + Fore.BLUE +"               #"],
+            [Fore.BLUE + "#              "+ Fore.WHITE +"                   I" + Fore.BLUE +"               #",
+            Fore.BLUE + "#              "+ Fore.WHITE +"                   |" + Fore.BLUE +"               #",
+            Fore.BLUE + "#              "+ Fore.WHITE +"                   |" + Fore.BLUE +"               #",
+            Fore.BLUE + "#              "+ Fore.WHITE +"                   |" + Fore.BLUE +"               #",
+            Fore.BLUE + "#              "+ Fore.WHITE +"                   |" + Fore.BLUE +"               #",
+            Fore.BLUE + "#              "+ Fore.WHITE +"     #####$|$#####/|" + Fore.BLUE +"               #",
+            Fore.BLUE + "#              "+ Fore.WHITE +"     $$$$$$|$$$$$$ |" + Fore.BLUE +"               #",
+            Fore.BLUE + "#              "+ Fore.WHITE +"     ------+------ |" + Fore.BLUE +"               #",
+            Fore.BLUE + "#              "+ Fore.WHITE +"     $$$$$$|$$$$$$ |" + Fore.BLUE +"               #",
+            Fore.BLUE + "#               "+ Fore.WHITE +"===================" + Fore.BLUE +"               #"],
+            [Fore.BLUE + "#              "+ Fore.WHITE +"                   I" + Fore.BLUE +"               #",
+            Fore.BLUE + "#              "+ Fore.WHITE +"                   |" + Fore.BLUE +"               #",
+            Fore.BLUE + "#              "+ Fore.WHITE +"                   |" + Fore.BLUE +"               #",
+            Fore.BLUE + "#              "+ Fore.WHITE +"                   |" + Fore.BLUE +"               #",
+            Fore.BLUE + "#              "+ Fore.WHITE +"     #####$|$#####/|" + Fore.BLUE +"               #",
+            Fore.BLUE + "#              "+ Fore.WHITE +"     $$$$$$|$$$$$$ |" + Fore.BLUE +"               #",
+            Fore.BLUE + "#              "+ Fore.WHITE +"     ------+------ |" + Fore.BLUE +"               #",
+            Fore.BLUE + "#              "+ Fore.WHITE +"     $$$$$$|$$$$$$ |" + Fore.BLUE +"               #",
+            Fore.BLUE + "#              "+ Fore.WHITE +"     #####$|$#####\|" + Fore.BLUE +"               #",
+            Fore.BLUE + "#               "+ Fore.WHITE +"===================" + Fore.BLUE +"               #"],
+            [Fore.BLUE + "#              "+ Fore.WHITE +"                   I" + Fore.BLUE +"               #",
+            Fore.BLUE + "#              "+ Fore.WHITE +"                   |" + Fore.BLUE +"               #",
+            Fore.BLUE + "#              "+ Fore.WHITE +"                   |" + Fore.BLUE +"               #",
+            Fore.BLUE + "#              "+ Fore.WHITE +"     #####$|$#####/|" + Fore.BLUE +"               #",
+            Fore.BLUE + "#              "+ Fore.WHITE +"     $$$$$$|$$$$$$ |" + Fore.BLUE +"               #",
+            Fore.BLUE + "#              "+ Fore.WHITE +"     ------+------ |" + Fore.BLUE +"               #",
+            Fore.BLUE + "#              "+ Fore.WHITE +"     $$$$$$|$$$$$$ |" + Fore.BLUE +"               #",
+            Fore.BLUE + "#              "+ Fore.WHITE +"     #####$|$#####\|" + Fore.BLUE +"               #",
+            Fore.BLUE + "#              "+ Fore.WHITE +"                   |" + Fore.BLUE +"               #",
+            Fore.BLUE + "#               "+ Fore.WHITE +"===================" + Fore.BLUE +"               #"],
+            [Fore.BLUE + "#              "+ Fore.WHITE +"                   I" + Fore.BLUE +"               #",
+            Fore.BLUE + "#              "+ Fore.WHITE +"                   |" + Fore.BLUE +"               #",
+            Fore.BLUE + "#              "+ Fore.WHITE +"     #####$|$#####/|" + Fore.BLUE +"               #",
+            Fore.BLUE + "#              "+ Fore.WHITE +"     $$$$$$|$$$$$$ |" + Fore.BLUE +"               #",
+            Fore.BLUE + "#              "+ Fore.WHITE +"     ------+------ |" + Fore.BLUE +"               #",
+            Fore.BLUE + "#              "+ Fore.WHITE +"     $$$$$$|$$$$$$ |" + Fore.BLUE +"               #",
+            Fore.BLUE + "#              "+ Fore.WHITE +"     #####$|$#####\|" + Fore.BLUE +"               #",
+            Fore.BLUE + "#              "+ Fore.WHITE +"                   |" + Fore.BLUE +"               #",
+            Fore.BLUE + "#              "+ Fore.WHITE +"                   |" + Fore.BLUE +"               #",
+            Fore.BLUE + "#               "+ Fore.WHITE +"===================" + Fore.BLUE +"               #"],
+            [Fore.BLUE + "#              "+ Fore.WHITE +"                   I" + Fore.BLUE +"               #",
+            Fore.BLUE + "#              "+ Fore.WHITE +"     #####$|$#####/|" + Fore.BLUE +"               #",
+            Fore.BLUE + "#              "+ Fore.WHITE +"     $$$$$$|$$$$$$ |" + Fore.BLUE +"               #",
+            Fore.BLUE + "#              "+ Fore.WHITE +"     ------+------ |" + Fore.BLUE +"               #",
+            Fore.BLUE + "#              "+ Fore.WHITE +"     $$$$$$|$$$$$$ |" + Fore.BLUE +"               #",
+            Fore.BLUE + "#              "+ Fore.WHITE +"     #####$|$#####\|" + Fore.BLUE +"               #",
+            Fore.BLUE + "#              "+ Fore.WHITE +"                   |" + Fore.BLUE +"               #",
+            Fore.BLUE + "#              "+ Fore.WHITE +"                   |" + Fore.BLUE +"               #",
+            Fore.BLUE + "#              "+ Fore.WHITE +"                   |" + Fore.BLUE +"               #",
+            Fore.BLUE + "#               "+ Fore.WHITE +"===================" + Fore.BLUE +"               #"],
+        ]
+
+        self.print_countries(counries_list,number-1)
+
+    def print_countries(self, countries_list,number):
+        for i in range(len(countries_list)):
+            print(countries_list[number][i])

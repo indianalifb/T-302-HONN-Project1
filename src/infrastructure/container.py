@@ -20,6 +20,7 @@ from src.GameState.incorrectGuessState import IncorrectGuessState
 from src.GameState.lostState import LostState
 from src.GameState.repeatedGuessState import RepeatedGuessState
 from src.GameState.wonState import WonState
+from src.friend_validator import FriendValidator
 
 class Container(containers.DeclarativeContainer):
     config: Settings = providers.Configuration()
@@ -48,6 +49,14 @@ class Container(containers.DeclarativeContainer):
         connection = db_connection_provider,
         validator = validator,
     )
+
+    friend_validator = providers.Singleton(
+        FriendValidator,
+        repo = UserNameRepository,
+        connection=db_connection_provider,
+        validator=validator
+    )
+
 
     leaderboard = providers.Singleton(
             LeaderBoardRepository,
@@ -115,5 +124,9 @@ class Container(containers.DeclarativeContainer):
         Hangman,
         player_list = player_list,
         game_play = game_play,
-        leaderboard = leaderboard
+        leaderboard = leaderboard,
+        player = player_provider,
+        message_sender = message_sender,
+        username_validator = validator,
+        friend_validator = friend_validator
     )
