@@ -267,8 +267,7 @@ class Hangman:
         if friend_username_input == "b":
             self.main_menu()
         if validator.validate(friend_username_input):
-            # TODO: actually adding a friend through Player class
-
+            self.player.add_friend(self.username, friend_username_input)
             self.friend_added_menu()
         else:
             self.friend_username_wrong_menu()
