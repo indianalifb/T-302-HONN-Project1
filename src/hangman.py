@@ -1,5 +1,7 @@
 import random
 import os
+
+from src.friend_validator import FriendValidator
 from src.game_play import GamePLay
 from src.db_connections.postgres_db_connection import PostgresDbConnection
 from src.message_sender import MessageSender
@@ -183,10 +185,11 @@ class Hangman:
         print("**                                                   **")
         print('-------------------------------------------------------')
         friend_input = input("Input:")
-        validator = UsernameValidator()
+        username_validator = UsernameValidator()
+        friend_validator = FriendValidator()
         if friend_input == "b":
             self.main_menu()
-        if validator.validate(friend_input): #TODO: and they are friends with the person
+        if username_validator.validate(friend_input) and friend_validator.validate(self.username, friend_input): #TODO: and they are friends with the person
             self.send_message_menu_message_input(friend_input)
 
     def send_message_menu_message_input(self, friend_name):
