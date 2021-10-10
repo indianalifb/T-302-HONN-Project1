@@ -115,26 +115,6 @@ class AnimalNormal(IAnimal):
             print(animal_list[number][i])
     
 
-# new_s = AnimalNormal()
-# new_s.draw_animal(0)
-# print()
-# new_s.draw_animal(1)
-# print()
-# new_s.draw_animal(2)
-# print()
-# new_s.draw_animal(3)
-# print()
-# new_s.draw_animal(4)
-# print()
-# new_s.draw_animal(5)
-# print()
-# new_s.draw_animal(6)
-# print()
-# new_s.draw_animal(7)
-# print()
-# new_s.draw_animal(8)
-# print()
-# new_s.draw_animal(9)
 
 
 
