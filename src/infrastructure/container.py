@@ -14,6 +14,7 @@ from src.game_play import GamePLay
 from src.reader import Difficulty, Reader
 from src.game_play import GamePLay
 from src.GameMode.normal_gamemode import NormalGameMode
+from src.friend_validator import FriendValidator
 
 class Container(containers.DeclarativeContainer):
     config: Settings = providers.Configuration()
@@ -35,6 +36,10 @@ class Container(containers.DeclarativeContainer):
 
     validator = providers.Singleton(
         UsernameValidator
+    )
+
+    friend_validator = providers.Singleton(
+        FriendValidator
     )
 
     repository = providers.Singleton(
@@ -80,5 +85,9 @@ class Container(containers.DeclarativeContainer):
         Hangman,
         player_list = player_list,
         game_play = game_play,
-        leaderboard = leaderboard
+        leaderboard = leaderboard,
+        player = player_provider,
+        message_sender = message_sender,
+        username_validator = validator,
+        friend_validator = friend_validator
     )
