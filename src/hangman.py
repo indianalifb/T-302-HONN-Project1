@@ -18,7 +18,7 @@ from src.game_play import GamePLay
 
 
 class Hangman:
-    def __init__(self, player_list: PlayersList, leaderboard: LeaderBoard, game_play: GamePLay):
+    def __init__(self, player_list: PlayersList, leaderboard: LeaderBoard, game_play: GamePLay, player: Player, message_sender: MessageSender, username_validator: UsernameValidator, friend_validator: FriendValidator):
         self.username = ""
         self.game_mode = ""
         self.game_difficulty = ""
@@ -26,8 +26,10 @@ class Hangman:
         self.player_list = player_list
         self.game_play = game_play
         self.leaderboard = leaderboard
-        self.message_sender = MessageSender() # it doesn't need to be initialized with any values so maybe this is okay?
-        self.player = Player(self.message_sender, self.player_list)
+        self.message_sender = message_sender
+        self.player = player
+        self.username_validator = username_validator
+        self.friend_validator = friend_validator
 
 
     def welcome_screen(self):
@@ -185,11 +187,9 @@ class Hangman:
         print("**                                                   **")
         print('-------------------------------------------------------')
         friend_input = input("Input:")
-        username_validator = UsernameValidator()
-        friend_validator = FriendValidator()
         if friend_input == "b":
             self.main_menu()
-        if username_validator.validate(friend_input) and friend_validator.validate(self.username, friend_input): #TODO: and they are friends with the person
+        if self.username_validator.validate(friend_input) and self.friend_validator.validate(self.username, friend_input): #TODO: and they are friends with the person
             self.send_message_menu_message_input(friend_input)
 
     def send_message_menu_message_input(self, friend_name):
@@ -263,10 +263,9 @@ class Hangman:
         print("**                                                   **")
         print('-------------------------------------------------------')
         friend_username_input = input("Input:")
-        validator = UsernameValidator()
         if friend_username_input == "b":
             self.main_menu()
-        if validator.validate(friend_username_input):
+        if self.username_validator.validate(friend_username_input):
             self.player.add_friend(self.username, friend_username_input)
             self.friend_added_menu()
         else:
