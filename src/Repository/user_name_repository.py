@@ -29,9 +29,17 @@ class UserNameRepository:
         else:
             return usernamedb[0]
 
+    def are_friends(self, caller, friend):
 
-
-
-
-
-
+        friends = self.__connection.execute(f'''
+        SELECT adder_id, reciever_id FROM FRIENDS
+        WHERE adder_id = (SELECT user_id FROM player WHERE username =
+        '{caller}')
+        AND
+        reciever_id = (SELECT user_id FROM PLAYER WHERE USERNAME =
+        '{friend}')
+        ''')
+        if len(friends) == 0:
+            return False
+        else:
+            return True

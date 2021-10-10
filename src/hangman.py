@@ -189,8 +189,32 @@ class Hangman:
         friend_input = input("Input:")
         if friend_input == "b":
             self.main_menu()
-        if self.username_validator.validate(friend_input) and self.friend_validator.validate(self.username, friend_input): #TODO: and they are friends with the person
+        if (self.username_validator.validate(friend_input) and
+                self.friend_validator.validate(self.username, friend_input) or
+                self.friend_validator.validate(friend_input, self.username)):
+
             self.send_message_menu_message_input(friend_input)
+
+        else:
+            self.friend_not_found_menu(friend_input)
+
+    def friend_not_found_menu(self, friend_name):
+        print('-------------------------------------------------------')
+        print("                    Message A Friend!                  ")
+        print('-------------------------------------------------------')
+        print("**                                                   **")
+        print("**                                                   **")
+        print("**               Username not found                  **")
+        print("**                                                   **")
+        print("**                  back: 'b'                        **")
+        print("**                                                   **")
+        print("**                                                   **")
+        print("**                                                   **")
+        print('-------------------------------------------------------')
+        user_input = input("Input:")
+        if user_input == 'b':
+            self.send_message_menu_friend_input()
+
 
     def send_message_menu_message_input(self, friend_name):
         print('-------------------------------------------------------')
@@ -210,6 +234,7 @@ class Hangman:
             self.main_menu()
         else:
             self.player.send_message(friend_name, message_input)
+            self.main_menu()
 
     def empty_leaderboards_menu(self):
         print('-------------------------------------------------------')
