@@ -79,8 +79,4 @@ class AnimalCompetitive(IAnimal):
         ]
             
         self.print_animal(animal_list,number-1)
-
-    def print_animal(self, animal_list,number):
-        for i in range(len(animal_list)):
-            print(animal_list[number][i])
     
