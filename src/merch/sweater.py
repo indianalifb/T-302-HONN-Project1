@@ -1,4 +1,4 @@
-from merch.Imerch import Imerch
+from src.merch.Imerch import Imerch
 
 class Sweater(Imerch):
     def getDescription(self):

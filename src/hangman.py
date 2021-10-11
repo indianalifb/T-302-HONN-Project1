@@ -1,5 +1,10 @@
 import random
 import os
+from src.merch.sweater import Sweater
+from src.merch.pants  import Pants
+from src.merch.print_logo import PrintLogo
+from src.merch.print_name import PrintName
+
 
 from src.friend_validator import FriendValidator
 from src.game_play import GamePLay
@@ -15,14 +20,17 @@ from src.leaders.leaders import LeaderBoard
 from src.infrastructure.settings import Settings
 from src.db_connections.db_config import DbConfig
 from src.game_play import GamePLay
+from src.merch.Imerch import Imerch
+from src.buy_merch import BuyMerch
 
 
 class Hangman:
-    def __init__(self, player_list: PlayersList, leaderboard: LeaderBoard, game_play: GamePLay, player: Player, message_sender: MessageSender, username_validator: UsernameValidator, friend_validator: FriendValidator):
+    def __init__(self, player_list: PlayersList, leaderboard: LeaderBoard, game_play: GamePLay, player: Player, message_sender: MessageSender, username_validator: UsernameValidator, friend_validator: FriendValidator, buy_merch: BuyMerch):
         self.username = ""
         self.game_mode = ""
         self.game_difficulty = ""
         self.game_category = ""
+        self.merch = ""
         self.player_list = player_list
         self.game_play = game_play
         self.leaderboard = leaderboard
@@ -30,6 +38,8 @@ class Hangman:
         self.player = player
         self.username_validator = username_validator
         self.friend_validator = friend_validator
+        self.buy_merch = buy_merch
+    
 
 
     def welcome_screen(self):
@@ -158,7 +168,7 @@ class Hangman:
         print("**                   Add a friend : 'a'              **")
         print("**                   Send a message : 'm'            **")
         print("**                   Leaderboards : 'l'              **")
-        print("**                                                   **")
+        print("**                   Buy merchandise: 'b'            **")
         print("**                                                   **")
         print('-------------------------------------------------------')
         menu_input = input("Input:")
@@ -170,6 +180,8 @@ class Hangman:
             self.send_message_menu_friend_input()
         elif menu_input == "l":
             self.leaderboards_menu()
+        elif menu_input == "b":
+            self.buy_merchendice()
         else:
             self.main_menu()
 
@@ -335,6 +347,72 @@ class Hangman:
             self.game_mode_menu()
         else:
             self.main_menu()
+
+
+    def buy_merchendice(self):
+        print('-------------------------------------------------------')
+        print("|                  Choose Merchandise                 |")
+        print('-------------------------------------------------------')
+        print("**                                                   **")
+        print("**                                                   **")
+        print("**                    Sweater: 's'                   **")
+        print("**                    Pants: 'p'                     **")
+        print("**                                                   **")
+        print("**                back to main menu: 'b'             **")
+        print("**                                                   **")
+        print("**                                                   **")
+        print('-------------------------------------------------------')
+        merch_type = input("Input: ")
+        if merch_type == "s":
+            #self.buy_merch.purchase(Sweater(),None)
+            self.buy_or_extra(Sweater())
+        elif merch_type == "p":
+            #self.buy_merch.purchase(Pants(),None)
+            self.buy_or_extra(Pants())
+        else:
+            self.main_menu()
+
+    def buy_or_extra(self, clothes):
+        print('-------------------------------------------------------')
+        print("|         Buy ",self.merch, " or add name or logo     |")
+        print('-------------------------------------------------------')
+        print("**                                                   **")
+        print("**                                                   **")
+        print("**                Buy chosen merch: 'b'              **")
+        print("**                    Add extra: 'e'                 **")
+        print("**                                                   **")
+        print("**                back to main menu: 'b'             **")
+        print("**                                                   **")
+        print("**                                                   **")
+        print('-------------------------------------------------------')
+        user_input = input("Input: ")
+        if user_input == "b":
+            self.buy_merch.purchase(clothes)
+            self.main_menu()
+        elif user_input == "e":
+            self.buy_extra(clothes)
+        else:
+            self.main_menu()
+
+    def buy_extra(self,clothes):
+        print('-------------------------------------------------------')
+        print("|                    Choose Extra                     |")
+        print('-------------------------------------------------------')
+        print("**                                                   **")
+        print("**                                                   **")
+        print("**               Add name to merch: 'n'              **")
+        print("**               Add logo to merch: 'l'              **")
+        print("**                                                   **")
+        print("**               back to main menu: 'b'              **")
+        print("**                                                   **")
+        print("**                                                   **")
+        print('-------------------------------------------------------')
+        extra = input("Input: ")
+        if extra == "n":
+            self.buy_merch.purchase(PrintName(clothes))
+        elif extra == "l":
+            self.buy_merch.purchase(PrintLogo(clothes))
+        self.main_menu()
 
 
     def game_mode_menu(self):

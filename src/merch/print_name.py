@@ -1,5 +1,5 @@
-from merch.Imerch import Imerch
-from merch.merch_decorator import MercheDecorator
+
+from src.merch.merch_decorator import MercheDecorator
 
 class PrintName(MercheDecorator):
 

@@ -1,5 +1,7 @@
 from dependency_injector import containers, providers
 from dependency_injector.wiring import inject, Provide
+from src.buy_merch import BuyMerch
+from src.merch.Imerch import Imerch
 from src.hangman import Hangman
 from src.player import Player
 from src.message_sender import MessageSender
@@ -120,6 +122,10 @@ class Container(containers.DeclarativeContainer):
         correct_guess_state = correct_guess_state
     )
 
+    buy_merch = providers.Singleton(
+        BuyMerch,
+    )
+
     hangman = providers.Singleton(
         Hangman,
         player_list = player_list,
@@ -128,5 +134,7 @@ class Container(containers.DeclarativeContainer):
         player = player_provider,
         message_sender = message_sender,
         username_validator = validator,
-        friend_validator = friend_validator
+        friend_validator = friend_validator,
+        buy_merch = buy_merch
     )
+
