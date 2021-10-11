@@ -109,10 +109,6 @@ class CountriesNormal(ICountries):
 
         self.print_countries(counries_list,number-1)
 
-    def print_countries(self, countries_list,number):
-        for i in range(len(countries_list)):
-            print(countries_list[number][i])
-
 
 
 
