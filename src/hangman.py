@@ -12,15 +12,12 @@ from src.db_connections.postgres_db_connection import PostgresDbConnection
 from src.message_sender import MessageSender
 from src.player import Player
 from src.username_validator import UsernameValidator
-from src.Repository.db_connection import DbConnection
 from src.Players.players_list import PlayersList
 from src.GameMode.normal_gamemode import NormalGameMode
 from src.GameMode.competitive_gamemode import CompetitiveGameMode
 from src.leaders.leaders import LeaderBoard 
-from src.infrastructure.settings import Settings
 from src.db_connections.db_config import DbConfig
 from src.game_play import GamePLay
-from src.merch.Imerch import Imerch
 from src.buy_merch import BuyMerch
 
 
@@ -41,7 +38,7 @@ class Hangman:
         self.buy_merch = buy_merch
     
 
-
+        '''Every screen takes input from user and reacts occordingly'''
     def welcome_screen(self):
         print('-------------------------------------------------------')
         print("|                !WELCOME TO HANGMAN!                 |")
@@ -60,7 +57,7 @@ class Hangman:
             self.new_user_screen()
         else:
             self.username = user_input
-            if self.player_list.lookup(user_input):
+            if self.player_list.lookup(user_input): #checking if username is in database
                 self.main_menu()
             else:
                 self.wrong_username_menu()
@@ -102,8 +99,8 @@ class Hangman:
         print("**                                                   **")
         print('-------------------------------------------------------')
         username_input = input("Input:")
-        if not self.player_list.lookup(username_input):
-            if not self.player_list.add(username_input):
+        if not self.player_list.lookup(username_input): #checking if username is in database
+            if not self.player_list.add(username_input): #if username is not in db, add it
                 self.username_too_long_screen()
             else:
                 self.username = username_input

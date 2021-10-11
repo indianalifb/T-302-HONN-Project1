@@ -12,7 +12,5 @@ class BuyMerch:
     def purchase(self,clothes : Imerch):
         self.client_code(clothes)
 
-
-
     def client_code(self,imerch: Imerch) -> None:
         print(f"*** You bought: {imerch.getDescription()} for {imerch.cost()} kr ***")

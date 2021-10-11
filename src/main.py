@@ -18,7 +18,6 @@ def run_migrations(db_connection: DbConnection):
         db_connection.commit()
 
 def create_postgres_db_config(settings: Settings):
-
     return PostgresDbConnection(db_config=DbConfig(
         host=settings.postgres_log_host,
         user=settings.postgres_log_user,
@@ -34,5 +33,6 @@ def start_game(hangman: Hangman):
 if __name__ == '__main__':
     container = Container()
     container.config.from_pydantic(Settings(_env_file='src/infrastructure/.env'))
+    #application "rót" sem resolve-ar allt application dependency tréð.
     hangman = container.hangman()
     start_game(hangman)

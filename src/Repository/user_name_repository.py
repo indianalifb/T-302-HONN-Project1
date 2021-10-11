@@ -10,6 +10,7 @@ class UserNameRepository:
         self.__connection = connection
         self.validator = validator
 
+    '''Save the username to the database'''
     def save_username(self, username):
         if self.validator:
             self.__connection.execute(
@@ -19,7 +20,8 @@ class UserNameRepository:
             self.__connection.commit()
         else:
             None
-
+    
+    '''Get the username to the database'''
     def get_username(self, username):
         usernamedb = self.__connection.execute(f'''
         SELECT username FROM Player WHERE username = '{username}'
@@ -29,8 +31,9 @@ class UserNameRepository:
         else:
             return usernamedb[0]
 
-    def are_friends(self, caller, friend):
 
+    '''Check if the friend the user is trying to send a message to is the user's friend'''
+    def are_friends(self, caller, friend):
         friends = self.__connection.execute(f'''
         SELECT adder_id, reciever_id FROM FRIENDS
         WHERE adder_id = (SELECT user_id FROM player WHERE username =

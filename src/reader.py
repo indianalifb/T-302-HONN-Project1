@@ -14,7 +14,6 @@ class Difficulty(Enum):
 class Reader:
     '''Reader takes no arguments to initialize'''
 
-
     def get_words(self, cat, diff):
         '''Call function with category letter for ex. "A" for animals,
             and difficulty letter ex. "m" for medium'''
@@ -37,7 +36,3 @@ class Reader:
             print("File not found") 
             None
 
-# if __name__ == "__main__":
-#     read = Reader()
-#     word = read.get_words("a", "m")
-#     print(word)

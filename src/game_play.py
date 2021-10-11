@@ -1,5 +1,3 @@
-# from src.GameMode.normal_gamemode import NormalGameMode
-# from src.GameMode.competitive_gamemode import CompetitiveGameMode
 from src.GameMode.IGameMode import IGameMode
 from src.reader import Reader
 from src.GameState.correctGuessState import CorrectGuessState
@@ -9,7 +7,6 @@ from src.GameState.lostState import LostState
 from src.GameState.repeatedGuessState import RepeatedGuessState
 from src.GameState.wonState import WonState
 
-CHAR_PLACEHOLDER = '-'
 
 
 class GamePLay:
@@ -20,8 +17,9 @@ class GamePLay:
         self.incorrect_guess_state = incorrect_guess_state
         self.holding_state = holding_state
         self.correct_guess_state = correct_guess_state
+        self.reader = reader
+        self.__state = holding_state
         self.number_of_guesses = 0
-        self.number_of_wrong_guesses = 0
         self.minus_points = 0
         self.total_points = 0
         self.word_to_guess = ""
@@ -31,9 +29,9 @@ class GamePLay:
         self.game_mode = ""
         self.guess = ""
         self.message = ""
-        self.reader = reader
-        self.__state = holding_state
-        self.letter_storage = []
+        self.letter_storage = [] #storing all guessed letters
+
+    '''functions to set states'''
 
     def get_won_state(self):
         return self.won_state
@@ -57,11 +55,13 @@ class GamePLay:
         self.__state = state
 
     def process(self, letter):
-        """Requests the state to process the guessed letter.
-        The State takes care of updating the , guessed_letters and providing a
+        """Processing the guessed letter.
+        The State takes care of updating the points, guessed_letters and providing a
         message for the gameplay"""
         self.__state.process(letter, self)
         self.__state.process(letter,self)
+        if self.__state == self.won_state:
+            self.__state.process(self)
 
     def start_game(self):
         while self.number_of_guesses !=0:
@@ -77,14 +77,11 @@ class GamePLay:
                 return
 
 
-
     def get_game_mode_elements(self):
+        '''get the elements of the game according to game mode'''
         self.number_of_guesses = self.game_mode.nr_of_guesses()
         self.minus_points = self.game_mode.minus_points()
         self.total_points = self.game_mode.total_points()
-        print("self.number_of_guesses:", self.number_of_guesses)
-        print("self.minus_points:", self.minus_points)
-        print("self.total_points:", self.total_points)
     
 
     def print_game_screen(self):
@@ -96,26 +93,27 @@ class GamePLay:
 
     
     def get_word(self):
+        '''Gets random word from txt file'''
         self.word_to_guess = self.reader.get_words(self.game_category, self.game_difficulty)
         word_len = len(self.word_to_guess)
         self.word_in_hiding = word_len * "_"
+        #TODO: rremove this print below
         print("word to guess:", self.word_to_guess)
 
     def placeholder_changes(self):
         pass
 
     def play(self, game_mode: IGameMode = None, difficulty = None, categegory = None):
+        '''Get everything the game needs and then start the game'''
         self.game_mode = game_mode
         self.game_difficulty = difficulty
         self.game_category = categegory
-        print("self.game_mode:", self.game_mode)
-        print("self.game_difficulty:", self.game_difficulty)
-        print("self.game_category:", self.game_category)
         self.get_game_mode_elements()
         self.get_word()
         self.start_game()
 
     def put_letter_in_word_in_hiding(self, user_guess):
+        '''Put the correct guessed letter instead of the placeholder in the hidden word'''
         for i in range(0, len(self.word_to_guess)):
             if self.word_to_guess[i] == user_guess:
                 my_list = []
@@ -124,15 +122,5 @@ class GamePLay:
                 self.word_in_hiding = ''.join([str(elem) for elem in my_list])
 
     def won(self):
-        print("IN WON")
         """Tests if all letters of in word are in guessed_letters"""
         return all(l in self.letter_storage for l in self.word_to_guess)
-
-
-    def lost(self):
-        """Tests if we have run out of guesses"""
-        return self.number_of_guesses <= 0
-
-
-
-

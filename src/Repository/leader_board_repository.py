@@ -5,7 +5,6 @@ from src.db_connections.postgres_db_connection import PostgresDbConnection
 
 
 class LeaderBoardRepository:
-
     def __init__(self, connection: DbConnection):
         self.__connection = connection
 
