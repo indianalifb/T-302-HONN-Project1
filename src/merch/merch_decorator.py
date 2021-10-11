@@ -1,5 +1,5 @@
 
-from merch.Imerch import Imerch
+from src.merch.Imerch import Imerch
 
 class MercheDecorator(Imerch):
     _wrapeee: Imerch = None
