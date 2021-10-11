@@ -1,14 +1,10 @@
 import os
 from src.hangman import Hangman
 from src.db_connections.postgres_db_connection import PostgresDbConnection
-from src.player import Player
-from src.username_validator import UsernameValidator
 from src.Repository.db_connection import DbConnection
 from src.infrastructure.container import Container
-from src.Players.players_list import PlayersList
 from src.infrastructure.settings import Settings
 from src.db_connections.db_config import DbConfig
-from src.GameState.IState import IState
 
 def run_migrations(db_connection: DbConnection):
     dir = './migrationsrcipts'
