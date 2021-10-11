@@ -1,11 +1,11 @@
-Hummingbird
+hummingbird
 Hippopotamus
-Salamander
-Rhinoceros
-Grasshopper
-Orangutan
-Narwhal
-Ferret
-Vaquita
-Chimpanzee
-Monarch Butterfly
+salamander
+shinoceros
+grasshopper
+orangutan
+narwhal
+ferret
+vaquita
+chimpanzee
+monarch Butterfly
