@@ -26,6 +26,7 @@ class Hangman:
         self.game_difficulty = ""
         self.game_category = ""
         self.merch = ""
+        self.score = 0
         self.player_list = player_list
         self.game_play = game_play
         self.leaderboard = leaderboard
@@ -515,18 +516,18 @@ class Hangman:
         difficulty_input = input("Input:")
         if difficulty_input == "e":
             self.game_difficulty = "e"
-            total_points = self.game_play.play(self.game_mode , self.game_difficulty, self.game_category)
-            self.observable_high_score_concrete.set_new_high_score(total_points)
+            self.score = self.game_play.play(self.game_mode , self.game_difficulty, self.game_category)
+            self.observable_high_score_concrete.set_new_high_score(self.score, self.username)
             self.main_menu()
         elif difficulty_input == "m":
             self.game_difficulty = "m"
-            total_points = self.game_play.play(self.game_mode , self.game_difficulty, self.game_category)
-            self.observable_high_score_concrete.set_new_high_score(total_points)
+            self.score = self.game_play.play(self.game_mode , self.game_difficulty, self.game_category)
+            self.observable_high_score_concrete.set_new_high_score(self.score, self.username)
             self.main_menu()
         elif difficulty_input == "h":
             self.game_difficulty = "h"
-            total_points = self.game_play.play(self.game_mode , self.game_difficulty, self.game_category)
-            self.observable_high_score_concrete.set_new_high_score(total_points)
+            self.score = self.game_play.play(self.game_mode , self.game_difficulty, self.game_category)
+            self.observable_high_score_concrete.set_new_high_score(self.score, self.username)
             self.main_menu()
         elif difficulty_input == 'q':
             sys.exit()

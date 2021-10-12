@@ -46,3 +46,11 @@ class UserNameRepository:
             return False
         else:
             return True
+
+    def save_high_score(self, high_score, username):
+        self.__connection.execute(
+        f'''
+        UPDATE player SET highscore = '{high_score}' WHERE username = '{username}'
+        ''')
+        self.__connection.commit()
+

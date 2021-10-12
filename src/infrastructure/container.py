@@ -149,6 +149,7 @@ class Container(containers.DeclarativeContainer):
 
     observable_high_score_concrete = providers.Singleton(
         ObservableHighScoreConcrete,
+        repository = repository
     )
 
     high_score_display = providers.Singleton(
