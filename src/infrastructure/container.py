@@ -13,7 +13,6 @@ from src.db_connections.db_config import DbConfig
 from src.infrastructure.settings import Settings
 from src.db_connections.postgres_db_connection import PostgresDbConnection
 from src.game_play import GamePLay
-from src.reader import Difficulty, Reader
 from src.game_play import GamePLay
 from src.GameMode.normal_gamemode import NormalGameMode
 from src.GameState.correctGuessState import CorrectGuessState
@@ -23,6 +22,10 @@ from src.GameState.lostState import LostState
 from src.GameState.repeatedGuessState import RepeatedGuessState
 from src.GameState.wonState import WonState
 from src.friend_validator import FriendValidator
+from src.reader import Reader, Difficulty
+from src.readers.txt_reader import TXTReader
+from src.readers.csv_reader import CSVReader
+from src.readers.csv_reader_adapter import CSVReaderAdapter
 
 class Container(containers.DeclarativeContainer):
     config: Settings = providers.Configuration()
@@ -37,7 +40,7 @@ class Container(containers.DeclarativeContainer):
     db_connection_provider = providers.Selector(
         config.environment.value,
         prod=providers.Singleton(
-            PostgresDbConnection, 
+            PostgresDbConnection,
             db_config=postgres_db_config
         )
     )
@@ -83,8 +86,23 @@ class Container(containers.DeclarativeContainer):
     )
 
 
+    txt_reader = providers.Singleton(
+        TXTReader,
+    )
+
+    csv_reader = providers.Singleton(
+        CSVReader,
+    )
+
+    adapter = providers.Singleton(
+        CSVReaderAdapter,
+        CSVReader
+    )
+
     reader = providers.Singleton(
         Reader,
+        txt_reader,
+        adapter,
     )
 
     correct_guess_state = providers.Singleton(
