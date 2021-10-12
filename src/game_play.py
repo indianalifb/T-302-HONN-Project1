@@ -107,12 +107,15 @@ class GamePLay:
 
     def play(self, game_mode = None, difficulty = None, categegory = None):
         '''Get everything the game needs and then start the game'''
+        self.__state = self.holding_state
+        self.letter_storage = []
         self.game_mode = self.game_mode_processing.factory_method(game_mode)
         self.game_difficulty = difficulty
         self.game_category = categegory
         self.get_game_mode_elements()
         self.get_word()
         self.start_game()
+        return self.total_points
 
     def put_letter_in_word_in_hiding(self, user_guess):
         '''Put the correct guessed letter instead of the placeholder in the hidden word'''

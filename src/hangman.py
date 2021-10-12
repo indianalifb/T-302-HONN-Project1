@@ -12,12 +12,15 @@ from src.Players.players_list import PlayersList
 from src.leaders.leaders import LeaderBoard 
 from src.game_play import GamePLay
 from src.buy_merch import BuyMerch
+from src.Observer.observable_high_score import ObservableHighScoreConcrete
+from src.Observer.HighscoreDisplay import HighscoreDisplay
 
 
 class Hangman:
     def __init__(self, player_list: PlayersList, leaderboard: LeaderBoard, game_play: GamePLay, 
     player: Player, message_sender: MessageSender, username_validator: UsernameValidator, 
-    friend_validator: FriendValidator, buy_merch: BuyMerch):
+    friend_validator: FriendValidator, buy_merch: BuyMerch, 
+    observable_high_score_concrete: ObservableHighScoreConcrete, high_score_display: HighscoreDisplay):
         self.username = ""
         self.game_mode = ""
         self.game_difficulty = ""
@@ -31,6 +34,9 @@ class Hangman:
         self.username_validator = username_validator
         self.friend_validator = friend_validator
         self.buy_merch = buy_merch
+        self.observable_high_score_concrete = observable_high_score_concrete
+        self.high_score_display = high_score_display
+        self.observable_high_score_concrete.register_observer(self.high_score_display)
     
 
         '''Every screen takes input from user and reacts occordingly'''
@@ -509,15 +515,18 @@ class Hangman:
         difficulty_input = input("Input:")
         if difficulty_input == "e":
             self.game_difficulty = "e"
-            self.game_play.play(self.game_mode , self.game_difficulty, self.game_category)
+            total_points = self.game_play.play(self.game_mode , self.game_difficulty, self.game_category)
+            self.observable_high_score_concrete.set_new_high_score(total_points)
             self.main_menu()
         elif difficulty_input == "m":
             self.game_difficulty = "m"
-            self.game_play.play(self.game_mode , self.game_difficulty, self.game_category)
+            total_points = self.game_play.play(self.game_mode , self.game_difficulty, self.game_category)
+            self.observable_high_score_concrete.set_new_high_score(total_points)
             self.main_menu()
         elif difficulty_input == "h":
             self.game_difficulty = "h"
-            self.game_play.play(self.game_mode , self.game_difficulty, self.game_category)
+            total_points = self.game_play.play(self.game_mode , self.game_difficulty, self.game_category)
+            self.observable_high_score_concrete.set_new_high_score(total_points)
             self.main_menu()
         elif difficulty_input == 'q':
             sys.exit()

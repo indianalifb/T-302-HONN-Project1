@@ -26,6 +26,9 @@ from src.friend_validator import FriendValidator
 from src.GameMode.normal_gamemode import NormalGameMode
 from src.GameMode.competitive_gamemode import CompetitiveGameMode
 from src.GameMode.gamemodeprocessing import GamemodeProcessing
+from src.Observer.observable_high_score import ObservableHighScoreConcrete
+from src.Observer.HighscoreDisplay import HighscoreDisplay
+
 
 class Container(containers.DeclarativeContainer):
     config: Settings = providers.Configuration()
@@ -144,6 +147,14 @@ class Container(containers.DeclarativeContainer):
         BuyMerch,
     )
 
+    observable_high_score_concrete = providers.Singleton(
+        ObservableHighScoreConcrete,
+    )
+
+    high_score_display = providers.Singleton(
+        HighscoreDisplay,
+    )
+
     hangman = providers.Singleton(
         Hangman,
         player_list = player_list,
@@ -153,6 +164,8 @@ class Container(containers.DeclarativeContainer):
         message_sender = message_sender,
         username_validator = validator,
         friend_validator = friend_validator,
-        buy_merch = buy_merch
+        buy_merch = buy_merch,
+        observable_high_score_concrete = observable_high_score_concrete,
+        high_score_display = high_score_display
     )
 
