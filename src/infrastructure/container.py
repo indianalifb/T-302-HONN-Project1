@@ -1,5 +1,5 @@
 from dependency_injector import containers, providers
-from dependency_injector.wiring import inject, Provide
+from dependency_injector.wiring import inject, Provide, provided
 from src.buy_merch import BuyMerch
 from src.merch.Imerch import Imerch
 from src.hangman import Hangman
@@ -23,6 +23,9 @@ from src.GameState.lostState import LostState
 from src.GameState.repeatedGuessState import RepeatedGuessState
 from src.GameState.wonState import WonState
 from src.friend_validator import FriendValidator
+from src.GameMode.normal_gamemode import NormalGameMode
+from src.GameMode.competitive_gamemode import CompetitiveGameMode
+from src.GameMode.gamemodeprocessing import GamemodeProcessing
 
 class Container(containers.DeclarativeContainer):
     config: Settings = providers.Configuration()
@@ -111,6 +114,20 @@ class Container(containers.DeclarativeContainer):
         WonState,
     )
 
+    normal_game_mode = providers.Singleton(
+        NormalGameMode
+    )
+
+    competitive_game_mode = providers.Singleton(
+        CompetitiveGameMode
+    )
+
+    game_mode_processing = providers.Singleton(
+        GamemodeProcessing,
+        normal_game_mode = normal_game_mode,
+        competitive_game_mode = competitive_game_mode
+    )
+
     game_play = providers.Singleton(
         GamePLay,
         reader = reader,
@@ -119,7 +136,8 @@ class Container(containers.DeclarativeContainer):
         lost_state = lost_state,
         incorrect_guess_state = incorrect_guess_state,
         holding_state = holding_state,
-        correct_guess_state = correct_guess_state
+        correct_guess_state = correct_guess_state,
+        game_mode_processing = game_mode_processing
     )
 
     buy_merch = providers.Singleton(
