@@ -21,3 +21,6 @@ class PlayersList(IPlayers):
             return False
         else:
             return True
+
+    def add_high_score(self, name, highscore):
+        self.repository.save_high_score(highscore,name)

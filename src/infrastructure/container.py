@@ -1,5 +1,5 @@
 from dependency_injector import containers, providers
-from dependency_injector.wiring import inject, Provide
+from dependency_injector.wiring import inject, Provide, provided
 from src.buy_merch import BuyMerch
 from src.merch.Imerch import Imerch
 from src.hangman import Hangman
@@ -26,6 +26,11 @@ from src.reader import Reader, Difficulty
 from src.readers.txt_reader import TXTReader
 from src.readers.csv_reader import CSVReader
 from src.readers.csv_reader_adapter import CSVReaderAdapter
+from src.GameMode.competitive_gamemode import CompetitiveGameMode
+from src.GameMode.gamemodeprocessing import GamemodeProcessing
+from src.Observer.observable_high_score import ObservableHighScoreConcrete
+from src.Observer.HighscoreDisplay import HighscoreDisplay
+
 
 class Container(containers.DeclarativeContainer):
     config: Settings = providers.Configuration()
@@ -129,6 +134,20 @@ class Container(containers.DeclarativeContainer):
         WonState,
     )
 
+    normal_game_mode = providers.Singleton(
+        NormalGameMode
+    )
+
+    competitive_game_mode = providers.Singleton(
+        CompetitiveGameMode
+    )
+
+    game_mode_processing = providers.Singleton(
+        GamemodeProcessing,
+        normal_game_mode = normal_game_mode,
+        competitive_game_mode = competitive_game_mode
+    )
+
     game_play = providers.Singleton(
         GamePLay,
         reader = reader,
@@ -137,11 +156,21 @@ class Container(containers.DeclarativeContainer):
         lost_state = lost_state,
         incorrect_guess_state = incorrect_guess_state,
         holding_state = holding_state,
-        correct_guess_state = correct_guess_state
+        correct_guess_state = correct_guess_state,
+        game_mode_processing = game_mode_processing
     )
 
     buy_merch = providers.Singleton(
         BuyMerch,
+    )
+
+    observable_high_score_concrete = providers.Singleton(
+        ObservableHighScoreConcrete,
+        repository = repository
+    )
+
+    high_score_display = providers.Singleton(
+        HighscoreDisplay,
     )
 
     hangman = providers.Singleton(
@@ -153,6 +182,8 @@ class Container(containers.DeclarativeContainer):
         message_sender = message_sender,
         username_validator = validator,
         friend_validator = friend_validator,
-        buy_merch = buy_merch
+        buy_merch = buy_merch,
+        observable_high_score_concrete = observable_high_score_concrete,
+        high_score_display = high_score_display
     )
 

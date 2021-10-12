@@ -6,11 +6,14 @@ from src.GameState.incorrectGuessState import IncorrectGuessState
 from src.GameState.lostState import LostState
 from src.GameState.repeatedGuessState import RepeatedGuessState
 from src.GameState.wonState import WonState
+from src.GameMode.gamemodeprocessing import GamemodeProcessing
 
 
 
 class GamePLay:
-    def __init__(self, reader: Reader, won_state: WonState, repeated_guess_state: RepeatedGuessState, lost_state: LostState, incorrect_guess_state: IncorrectGuessState, holding_state: HoldingState, correct_guess_state: CorrectGuessState):
+    def __init__(self, reader: Reader, won_state: WonState, repeated_guess_state: RepeatedGuessState, 
+    lost_state: LostState, incorrect_guess_state: IncorrectGuessState, holding_state: HoldingState, 
+    correct_guess_state: CorrectGuessState, game_mode_processing: GamemodeProcessing):
         self.won_state = won_state
         self.repeated_guess_state = repeated_guess_state
         self.lost_state = lost_state
@@ -19,6 +22,7 @@ class GamePLay:
         self.correct_guess_state = correct_guess_state
         self.reader = reader
         self.__state = holding_state
+        self.game_mode_processing = game_mode_processing
         self.number_of_guesses = 0
         self.minus_points = 0
         self.total_points = 0
@@ -100,17 +104,18 @@ class GamePLay:
         #TODO: rremove this print below
         print("word to guess:", self.word_to_guess)
 
-    def placeholder_changes(self):
-        pass
 
-    def play(self, game_mode: IGameMode = None, difficulty = None, categegory = None):
+    def play(self, game_mode = None, difficulty = None, categegory = None):
         '''Get everything the game needs and then start the game'''
-        self.game_mode = game_mode
+        self.__state = self.holding_state
+        self.letter_storage = []
+        self.game_mode = self.game_mode_processing.factory_method(game_mode)
         self.game_difficulty = difficulty
         self.game_category = categegory
         self.get_game_mode_elements()
         self.get_word()
         self.start_game()
+        return self.total_points
 
     def put_letter_in_word_in_hiding(self, user_guess):
         '''Put the correct guessed letter instead of the placeholder in the hidden word'''
