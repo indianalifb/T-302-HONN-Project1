@@ -5,15 +5,11 @@ from src.merch.print_logo import PrintLogo
 from src.merch.print_name import PrintName
 from src.friend_validator import FriendValidator
 from src.game_play import GamePLay
-from src.db_connections.postgres_db_connection import PostgresDbConnection
 from src.message_sender import MessageSender
 from src.player import Player
 from src.username_validator import UsernameValidator
 from src.Players.players_list import PlayersList
-from src.GameMode.normal_gamemode import NormalGameMode
-from src.GameMode.competitive_gamemode import CompetitiveGameMode
 from src.leaders.leaders import LeaderBoard 
-from src.db_connections.db_config import DbConfig
 from src.game_play import GamePLay
 from src.buy_merch import BuyMerch
 
