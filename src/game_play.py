@@ -127,8 +127,6 @@ class GamePLay:
         self.word_to_guess = self.reader.get_words(self.game_category, self.game_difficulty)
         word_len = len(self.word_to_guess)
         self.word_in_hiding = word_len * "_"
-        #TODO: rremove this print below
-        print("word to guess:", self.word_to_guess)
 
 
     def play(self, game_mode = None, difficulty = None, categegory = None):
