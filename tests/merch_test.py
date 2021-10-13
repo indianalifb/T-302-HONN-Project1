@@ -12,7 +12,7 @@ def test_that_purchases_pants(mocked_print):
     buy = BuyMerch()
     clothes = Pants()
 
-    buy.client_code(clothes)
+    buy.purchase(clothes)
     assert mocked_print.mock_calls == [call("*** You bought: Pants for 4000 kr ***")]
 
 @patch('builtins.print')
