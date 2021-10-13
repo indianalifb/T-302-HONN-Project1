@@ -1,5 +1,5 @@
 hummingbird
-Hippopotamus
+hippopotamus
 salamander
 shinoceros
 grasshopper
