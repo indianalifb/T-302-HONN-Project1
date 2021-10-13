@@ -21,24 +21,23 @@ postgres_log_password="password"
 # environment
 environment="prod"
 ```
-<br/>
-using VENV<br/>
-<br/>
-In T-302-HONN-Projcet1 directory create a virtual environment<br/>
-Firstly make sure you have virtualenv installed<br/>
+
+using VENV
+In T-302-HONN-Projcet1 directory create a virtual environment<br>
+Firstly make sure you have virtualenv installed<br>
 ```pip install virtualenv```
-then we can run <br/>
+then we can run <br>
 ```virtualenv venv``` 
-<br/>
-Next step we activate the environment<br/>
+<br>
+Next step we activate the environment<br>
 ```./venv/bin/activate``` 
-or if using Fish shell<br/>
+or if using Fish shell<br>
 ```source venv/bin/activate.fish```
-Next up let's install required packages<br/>
+Next up let's install required packages<br>
 ```python -m pip install -r requirements.txt```
-Now the virtual environment should be set up and we can finally run the program<br/>
+Now the virtual environment should be set up and we can finally run the program<br>
 ```python -m src.main```
-Now just sit back and guess some letters!<br/>
+Now just sit back and guess some letters!<br>
 
 ## Design Patterns:
  • Strategy     
