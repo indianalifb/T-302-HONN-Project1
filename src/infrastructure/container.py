@@ -1,5 +1,9 @@
 from dependency_injector import containers, providers
 from dependency_injector.wiring import inject, Provide, provided
+from src.merch.pants import Pants
+from src.merch.print_logo import PrintLogo
+from src.merch.print_name import PrintName
+from src.merch.sweater import Sweater
 from src.buy_merch import BuyMerch
 from src.merch.Imerch import Imerch
 from src.hangman import Hangman
@@ -173,6 +177,15 @@ class Container(containers.DeclarativeContainer):
         HighscoreDisplay,
     )
 
+    sweater = providers.Singleton(
+        Sweater
+    )
+
+    pants = providers.Singleton(
+        Pants
+    )
+
+
     hangman = providers.Singleton(
         Hangman,
         player_list = player_list,
@@ -184,6 +197,9 @@ class Container(containers.DeclarativeContainer):
         friend_validator = friend_validator,
         buy_merch = buy_merch,
         observable_high_score_concrete = observable_high_score_concrete,
-        high_score_display = high_score_display
+        high_score_display = high_score_display,
+        sweater = sweater,
+        pants = pants
+
     )
 
