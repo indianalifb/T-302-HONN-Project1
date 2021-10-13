@@ -24,6 +24,20 @@ environment="prod"
 
 using VENV
 
+In T-302-HONN-Projcet1 directory create a virtual environment
+Firstly make sure you have virtualenv installed
+```pip install virtualenv```
+then we can run 
+```virtualenv venv```
+Next step we activate the environment
+```./venv/bin/activate```
+or if using Fish shell
+```source venv/bin/activate.fish```
+Next up let's install required packages
+```python -m pip install -r requirements.txt```
+Now the virtual environment should be set up and we can finally run the program
+```python -m src.main```
+Now just sit back and guess some letters!
 
 ## Design Patterns:
  • Strategy     
