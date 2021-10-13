@@ -30,6 +30,9 @@ using VENV
  • Decorator    
  • Abstract Factory     
  • Template Method  
+ • State
+ • Observer
+ • Adapter
 
  ## Design Principles
  • Open-Closed Principle        
@@ -37,8 +40,6 @@ using VENV
  • DRY  
  • Loose Coupling   
  • Encapsulate what varies	    
-## Problems:
-
 
 ## Authors
 Indíana Líf Bergsteinsdóttir - indiana18@ru.is     
