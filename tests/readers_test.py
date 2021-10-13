@@ -71,3 +71,36 @@ def test_that_reader_is_randomized():
 
     # Assert
     assert word_1 is not word_2
+
+def test_that_csv_reader_throws_exception_with_bad_filename():
+    # Arrangu
+    csv_reader = CSVReader()
+
+    # Act Assert
+    with pytest.raises(FileNotFoundError) as exception:
+        csv_reader.read_csv_file("bro")
+
+def test_that_txt_reader_throws_exception_with_bad_filename():
+    # arrange
+    txt_reader = TXTReader()
+
+    # Act Assert
+    with pytest.raises(FileNotFoundError) as exception:
+        txt_reader.read_txt_file("son")
+
+def test_that_adapter_read_txt_file_returns_nothing():
+    # Arrange
+    reader = Mock(CSVReader())
+    adapter = CSVReaderAdapter(reader)
+    # Act
+    words = adapter.read_txt_file("")
+    # assert
+    assert words is None
+
+def test_that_adapter_throws_exception_on_bad_filename():
+    # Arrange
+    reader = CSVReader
+    adapter = CSVReaderAdapter(reader)
+    # Act Assert
+    with pytest.raises(FileNotFoundError) as exception:
+        adapter.read_csv_file("bro")
