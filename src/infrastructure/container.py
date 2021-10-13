@@ -34,6 +34,7 @@ from src.GameMode.competitive_gamemode import CompetitiveGameMode
 from src.GameMode.gamemodeprocessing import GamemodeProcessing
 from src.Observer.observable_high_score import ObservableHighScoreConcrete
 from src.Observer.HighscoreDisplay import HighscoreDisplay
+from src.friend_adder import FriendAdder
 
 
 class Container(containers.DeclarativeContainer):
@@ -71,6 +72,12 @@ class Container(containers.DeclarativeContainer):
         validator=validator
     )
 
+    friend_adder = providers.Singleton(
+        FriendAdder,
+        repo=UserNameRepository,
+        connection=db_connection_provider,
+        validator=validator
+    )
 
     leaderboard = providers.Singleton(
             LeaderBoardRepository,
@@ -91,7 +98,8 @@ class Container(containers.DeclarativeContainer):
     player_provider = providers.Factory(
         Player,
         message_sender = message_sender,
-        player_list = player_list
+        player_list = player_list,
+        friend_adder = friend_adder
     )
 
 

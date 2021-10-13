@@ -20,13 +20,13 @@ class UserNameRepository:
             self.__connection.commit()
         else:
             None
-    
+
     '''Get the username to the database'''
     def get_username(self, username):
         usernamedb = self.__connection.execute(f'''
         SELECT username FROM Player WHERE username = '{username}'
         ''')
-        if len(usernamedb) == 0:    
+        if len(usernamedb) == 0:
             return None
         else:
             return usernamedb[0]
@@ -54,3 +54,11 @@ class UserNameRepository:
         ''')
         self.__connection.commit()
 
+    def add_friend(self, adder, reciever):
+        self.__connection.execute(f'''
+                                  INSERT INTO FRIENDS(adder_id, reciever_id)
+                                  VALUES
+                                  ((SELECT USER_ID FROM PLAYER WHERE USERNAME = '{adder}'),
+                                   (SELECT USER_ID FROM PLAYER WHERE USERNAME = '{reciever}'))
+                                  ''')
+        self.__connection.commit()
