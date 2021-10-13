@@ -9,7 +9,7 @@ class PlayersList(IPlayers):
         self.validator = validator
 
     def add(self, name):
-        if self.validator:
+        if self.validator.validate(name):
             self.repository.save_username(name)
             return True
         else:
