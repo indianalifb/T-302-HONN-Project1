@@ -9,8 +9,6 @@ from src.merch.pants import Pants
 from src.merch.sweater import Sweater
 
 class BuyMerch:
-    def purchase(self,clothes : Imerch):
-        self.client_code(clothes)
-
-    def client_code(self,imerch: Imerch) -> None:
+    #print out the descripton and cost of the clothes bought and logo/name if that added
+    def purchase(self,imerch : Imerch):
         print(f"*** You bought: {imerch.getDescription()} for {imerch.cost()} kr ***")
