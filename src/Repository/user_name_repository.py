@@ -12,7 +12,7 @@ class UserNameRepository:
 
     '''Save the username to the database'''
     def save_username(self, username):
-        if self.validator:
+        if self.validator.validate(username):
             self.__connection.execute(
             f'''
             INSERT INTO player (username,highscore) VALUES ('{username}', {0})
