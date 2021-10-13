@@ -1,3 +1,7 @@
+from src.GameMode.normal_gamemode import NormalGameMode
+from src.drawings_mode.competitve_drawing import CompetitveDrawing
+from src.drawings_mode.normal_drawing import NormalDrawing
+from src.drawings_mode.Idrawing import Idrawing
 from src.GameMode.IGameMode import IGameMode
 from src.reader import Reader
 from src.GameState.correctGuessState import CorrectGuessState
@@ -26,6 +30,7 @@ class GamePLay:
         self.number_of_guesses = 0
         self.minus_points = 0
         self.total_points = 0
+        self.wrong_guess = 0
         self.word_to_guess = ""
         self.word_in_hiding = ""
         self.game_category = ""
@@ -33,6 +38,7 @@ class GamePLay:
         self.game_mode = ""
         self.guess = ""
         self.message = ""
+        self.game_mode_picture = ""
         self.letter_storage = [] #storing all guessed letters
 
     '''functions to set states'''
@@ -94,6 +100,26 @@ class GamePLay:
         print("**                     ",self.word_in_hiding,"                  **")
         print('-------------------------------------------------------')
         #call print(drawing), þarf að fa inn hversu mörg vitlaust eru komin
+        if self.wrong_guess > 0:
+            if self.game_mode_picture == "n":
+                self.print_picture(NormalDrawing())
+            else:
+                self.print_picture(CompetitveDrawing())
+        
+
+
+    def print_picture(self, drawing: Idrawing):
+        if self.game_category == "a":
+            animal = drawing.create_animal()
+            animal.draw_animal(self.wrong_guess)
+        elif self.game_category == "c":
+            country = drawing.create_country()
+            country.draw_countries(self.wrong_guess)
+        else:
+            food = drawing.create_food()
+            food.draw_food(self.wrong_guess)
+
+
 
     
     def get_word(self):
@@ -110,8 +136,10 @@ class GamePLay:
         self.__state = self.holding_state
         self.letter_storage = []
         self.game_mode = self.game_mode_processing.factory_method(game_mode)
+        self.game_mode_picture= game_mode
         self.game_difficulty = difficulty
         self.game_category = categegory
+        self.wrong_guess = 0
         self.get_game_mode_elements()
         self.get_word()
         self.start_game()
