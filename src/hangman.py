@@ -54,7 +54,7 @@ class Hangman:
         print("**                                                   **")
         print("**                     Quit: 'q'                     **")
         print('-------------------------------------------------------')
-        user_input = input("Input:")
+        user_input = input("Input:").lower()
         if user_input == "new":
             self.new_user_screen()
         elif user_input == 'q':
@@ -79,7 +79,7 @@ class Hangman:
         print("**                   new member?: 'n'                **")
         print("**                     Quit: 'q'                     **")
         print('-------------------------------------------------------')
-        try_again_username_input = input("Input:")
+        try_again_username_input = input("Input:").lower()
         if try_again_username_input == "n":
             self.new_user_screen()
         elif try_again_username_input == 'q':
@@ -111,7 +111,7 @@ class Hangman:
             else:
                 self.username = username_input
                 self.main_menu()
-        elif username_input == 'q':
+        elif username_input.lower() == 'q':
             sys.exit()
         else:
             self.username_taken_screen()
@@ -128,7 +128,7 @@ class Hangman:
         print("**                                                   **")
         print("**                     Quit: 'q'                     **")
         print('-------------------------------------------------------')
-        username_input = input("Input:")
+        username_input = input("Input:").lower()
         if not self.player_list.lookup(username_input):
             if not self.player_list.add(username_input):
                 self.username_too_long_screen()
@@ -153,7 +153,7 @@ class Hangman:
         print("**                                                   **")
         print("**                     Quit: 'q'                     **")
         print('-------------------------------------------------------')
-        username_input = input("Input:")
+        username_input = input("Input:").lower()
         if not self.player_list.lookup(username_input):
             if not self.player_list.add(username_input):
                 self.username_too_long_screen()
@@ -180,7 +180,7 @@ class Hangman:
         print("**                   Buy merchandise: 'b'            **")
         print("**                     Quit: 'q'                     **")
         print('-------------------------------------------------------')
-        menu_input = input("Input:")
+        menu_input = input("Input:").lower()
         if menu_input == "p":
             self.game_mode_menu()
         elif menu_input == "a":
@@ -209,7 +209,7 @@ class Hangman:
         print("**                                                   **")
         print("**                     Quit: 'q'                     **")
         print('-------------------------------------------------------')
-        friend_input = input("Input:")
+        friend_input = input("Input:").lower()
         if friend_input == "b":
             self.main_menu()
         if (self.username_validator.validate(friend_input) and
@@ -234,7 +234,7 @@ class Hangman:
         print("**                                                   **")
         print("**                     Quit: 'q'                     **")
         print('-------------------------------------------------------')
-        user_input = input("Input:")
+        user_input = input("Input:").lower()
         if user_input == 'b':
             self.send_message_menu_friend_input()
         else:
@@ -254,7 +254,7 @@ class Hangman:
         print("**                  Quit: 'q'                        **")
         print("**                                                   **")
         print('-------------------------------------------------------')
-        message_input = input("Input:")
+        message_input = input("Input:").lower()
         if message_input == "b":
             self.main_menu()
         elif message_input == 'q':
@@ -276,12 +276,11 @@ class Hangman:
         print("**                                                   **")
         print("**                    back: 'b'                      **")
         print('-------------------------------------------------------')
-        message_input = input("Input:")
+        message_input = input("Input:").lower()
         if message_input == "b":
             self.main_menu()
         elif message_input == 'q':
             sys.exit()
-        # TODO: klara
 
     def leaderboards_menu(self):
         leaders = self.leaderboard.get_leaders()
@@ -300,7 +299,7 @@ class Hangman:
             print("**                    back: 'b'                      **")
             print("**                     Quit: 'q'                     **")
             print('-------------------------------------------------------')
-            message_input = input("Input:")
+            message_input = input("Input:").lower()
             if message_input == 'b':
                 self.main_menu()
             elif message_input == 'q':
@@ -319,9 +318,12 @@ class Hangman:
         print("**                  Quit: 'q'                        **")
         print("**                                                   **")
         print('-------------------------------------------------------')
-        friend_username_input = input("Input:")
+        friend_username_input = input("Input:").lower()
         if friend_username_input == "b":
             self.main_menu()
+
+        if self.friend_validator(self.username, friend_username_input):
+            self.already_friends_menu()
         if self.username_validator.validate(friend_username_input) and self.player_list.lookup(friend_username_input):
             self.player.add_friend(self.username, friend_username_input)
             self.friend_added_menu()
@@ -343,15 +345,36 @@ class Hangman:
         print("**                     Quit: 'q'                     **")
         print("**                                                   **")
         print('-------------------------------------------------------')
-        try_again_friend_username_input = input("Input:")
+        try_again_friend_username_input = input("Input:").lower()
         if try_again_friend_username_input == "b":
             self.main_menu()
-        if UsernameValidator(try_again_friend_username_input):
+        if self.friend_validator(self.username, friend_username_input):
+            self.already_friends_menu()
+        if self.username_validator.validate(try_again_friend_username_input) and self.player_list.lookup(try_again_friend_username_input):
             self.friend_added_menu()
         elif try_again_friend_username_input == 'q':
             sys.exit()
         else:
             self.friend_username_wrong_menu()
+
+    def already_friends_menu():
+        print('-------------------------------------------------------')
+        print("|                      Lucky You!                       |")
+        print('-------------------------------------------------------')
+        print("**                                                   **")
+        print("**                                                   **")
+        print("**             You guys are already friends!         **")
+        print("**                                                   **")
+        print("**                                                   **")
+        print("**                     back: 'b'                     **")
+        print("**                     Quit: 'q'                     **")
+        print("**                                                   **")
+        print('-------------------------------------------------------')
+        input = input("Input:").lower()
+        if input.lower() == 'b':
+            self.main_menu()
+        if input.lower() == 'q':
+            sys.exit()
 
     def friend_added_menu(self):
         print('-------------------------------------------------------')
@@ -366,7 +389,7 @@ class Hangman:
         print("**                     Quit: 'q'                     **")
         print("**                                                   **")
         print('-------------------------------------------------------')
-        the_input = input("Input:")
+        the_input = input("Input:").lower()
         if the_input == "p":
             self.game_mode_menu()
         elif the_input == 'q':
@@ -461,7 +484,7 @@ class Hangman:
         print("**                     Quit: 'q'                     **")
         print("**                                                   **")
         print('-------------------------------------------------------')
-        game_input = input("Input:")
+        game_input = input("Input:").lower()
         if game_input == "n":
             self.game_mode = "n"
             self.category_menu()
@@ -484,7 +507,7 @@ class Hangman:
         print("**                     Quit: 'q'                     **")
         print("**                                                   **")
         print('-------------------------------------------------------')
-        category_input = input("Input:")
+        category_input = input("Input:").lower()
         if category_input == "a":
             self.game_category = "a"
             self.game_difficulty_menu()
@@ -513,7 +536,7 @@ class Hangman:
         print("**                                                   **")
         print("**                     Quit: 'q'                     **")
         print('-------------------------------------------------------')
-        difficulty_input = input("Input:")
+        difficulty_input = input("Input:").lower()
         if difficulty_input == "e":
             self.game_difficulty = "e"
             self.score = self.game_play.play(self.game_mode , self.game_difficulty, self.game_category)
