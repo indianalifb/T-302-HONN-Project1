@@ -19,7 +19,8 @@ postgres_log_user="postgres"
 postgres_log_password="password"
 
 # environment
-environment="prod"```
+environment="prod"
+```
 
 using VENV
 
