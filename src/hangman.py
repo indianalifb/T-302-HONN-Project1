@@ -321,7 +321,6 @@ class Hangman:
         friend_username_input = input("Input:").lower()
         if friend_username_input == "b":
             self.main_menu()
-
         if self.friend_validator.validate(self.username, friend_username_input):
             self.already_friends_menu()
         if self.username_validator.validate(friend_username_input) and self.player_list.lookup(friend_username_input):
