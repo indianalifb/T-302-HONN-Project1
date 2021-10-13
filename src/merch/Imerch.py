@@ -9,5 +9,5 @@ class Imerch(ABC):
 
 
     @abstractmethod
-    def cost():
+    def cost(self):
         pass
