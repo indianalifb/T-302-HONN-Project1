@@ -61,3 +61,4 @@ class UserNameRepository:
                                   ((SELECT USER_ID FROM PLAYER WHERE USERNAME = '{adder}'),
                                    (SELECT USER_ID FROM PLAYER WHERE USERNAME = '{reciever}'))
                                   ''')
+        self.__connection.commit()
