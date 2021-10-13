@@ -6,8 +6,21 @@ Python console application.
 Make sure you have installed all of the following prerequisites on your machine:
 
 * Python3.6+
+* PostgreSQL
 
 ## Running the program:
+First make sure you have PostgreSQL installed
+Create database Hangman and run create.sql script
+in src/infrastructure add a .env file that contains your database configuration
+ ```# postgres database logging
+postgres_log_host="localhost"
+postgres_log_database="Hangman"
+postgres_log_user="postgres"
+postgres_log_password="password"
+
+# environment
+environment="prod"```
+
 using VENV
 
 
