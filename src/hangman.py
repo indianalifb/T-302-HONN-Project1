@@ -322,7 +322,7 @@ class Hangman:
         if friend_username_input == "b":
             self.main_menu()
 
-        if self.friend_validator(self.username, friend_username_input):
+        if self.friend_validator.validate(self.username, friend_username_input):
             self.already_friends_menu()
         if self.username_validator.validate(friend_username_input) and self.player_list.lookup(friend_username_input):
             self.player.add_friend(self.username, friend_username_input)
@@ -348,7 +348,7 @@ class Hangman:
         try_again_friend_username_input = input("Input:").lower()
         if try_again_friend_username_input == "b":
             self.main_menu()
-        if self.friend_validator(self.username, friend_username_input):
+        if self.friend_validator.validate(self.username, friend_username_input):
             self.already_friends_menu()
         if self.username_validator.validate(try_again_friend_username_input) and self.player_list.lookup(try_again_friend_username_input):
             self.friend_added_menu()
