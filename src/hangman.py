@@ -17,10 +17,12 @@ from src.Observer.HighscoreDisplay import HighscoreDisplay
 
 
 class Hangman:
-    def __init__(self, player_list: PlayersList, leaderboard: LeaderBoard, game_play: GamePLay,
-    player: Player, message_sender: MessageSender, username_validator: UsernameValidator,
-    friend_validator: FriendValidator, buy_merch: BuyMerch,
-    observable_high_score_concrete: ObservableHighScoreConcrete, high_score_display: HighscoreDisplay):
+    def __init__(self, player_list: PlayersList, leaderboard: LeaderBoard, game_play: GamePLay, 
+    player: Player, message_sender: MessageSender, username_validator: UsernameValidator, 
+    friend_validator: FriendValidator, buy_merch: BuyMerch, 
+    observable_high_score_concrete: ObservableHighScoreConcrete, high_score_display: HighscoreDisplay, 
+    sweater: Sweater, pants: Pants):
+
         self.username = ""
         self.game_mode = ""
         self.game_difficulty = ""
@@ -37,6 +39,8 @@ class Hangman:
         self.buy_merch = buy_merch
         self.observable_high_score_concrete = observable_high_score_concrete
         self.high_score_display = high_score_display
+        self.sweater = sweater
+        self.pants = pants
         self.observable_high_score_concrete.register_observer(self.high_score_display)
 
 
@@ -413,10 +417,10 @@ class Hangman:
         merch_type = input("Input: ")
         if merch_type == "s":
             #self.buy_merch.purchase(Sweater(),None)
-            self.buy_or_extra(Sweater())
+            self.buy_or_extra(self.sweater)
         elif merch_type == "p":
             #self.buy_merch.purchase(Pants(),None)
-            self.buy_or_extra(Pants())
+            self.buy_or_extra(self.pants)
         elif merch_type == 'q':
             sys.exit()
         else:
@@ -462,8 +466,10 @@ class Hangman:
         extra = input("Input: ")
         if extra == "n":
             self.buy_merch.purchase(PrintName(clothes))
+            self.main_menu()
         elif extra == "l":
             self.buy_merch.purchase(PrintLogo(clothes))
+            self.main_menu()
         elif extra == 'q':
             sys.exit()
         else:
