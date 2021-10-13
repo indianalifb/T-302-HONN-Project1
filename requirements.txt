@@ -6,7 +6,7 @@ dependency-injector==4.36.0
 iniconfig==1.1.1
 packaging==21.0
 pluggy==1.0.0
-# psycopg2==2.9.1
+psycopg2==2.9.1
 py==1.10.0
 pydantic==1.8.2
 pyparsing==2.4.7
@@ -16,3 +16,4 @@ python-dotenv==0.19.0
 six==1.16.0
 toml==0.10.2
 typing-extensions==3.10.0.2
+
