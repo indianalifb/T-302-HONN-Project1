@@ -7,9 +7,6 @@ class MercheDecorator(Imerch):
     def __init__(self, imerch: Imerch) -> None:
         self._wrapeee = imerch
 
-    # def component(self) -> str:
-    #     return self._wrapeee
-
     def getDescription(self):
         return self._wrapeee.getDescription()
 
