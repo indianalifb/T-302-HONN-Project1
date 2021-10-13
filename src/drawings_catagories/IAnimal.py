@@ -8,3 +8,4 @@ class IAnimal(ABC):
     def print_animal(self, animal_list,number):
         for i in range(len(animal_list)):
             print(animal_list[number][i])
+        
