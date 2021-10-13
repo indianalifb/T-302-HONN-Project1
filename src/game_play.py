@@ -15,8 +15,8 @@ from src.GameMode.gamemodeprocessing import GamemodeProcessing
 
 
 class GamePLay:
-    def __init__(self, reader: Reader, won_state: WonState, repeated_guess_state: RepeatedGuessState, 
-    lost_state: LostState, incorrect_guess_state: IncorrectGuessState, holding_state: HoldingState, 
+    def __init__(self, reader: Reader, won_state: WonState, repeated_guess_state: RepeatedGuessState,
+    lost_state: LostState, incorrect_guess_state: IncorrectGuessState, holding_state: HoldingState,
     correct_guess_state: CorrectGuessState, game_mode_processing: GamemodeProcessing):
         self.won_state = won_state
         self.repeated_guess_state = repeated_guess_state
@@ -79,7 +79,7 @@ class GamePLay:
                 self.__state.process(self)
                 return
             self.print_game_screen()
-            letter = input('Guess a letter: ')
+            letter = input('Guess a letter: ').lower()
             self.process(letter)
             print('\n' + self.message + '\n')
         if self.__state == self.lost_state:
@@ -92,7 +92,7 @@ class GamePLay:
         self.number_of_guesses = self.game_mode.nr_of_guesses()
         self.minus_points = self.game_mode.minus_points()
         self.total_points = self.game_mode.total_points()
-    
+
 
     def print_game_screen(self):
         print('-------------------------------------------------------')
@@ -105,7 +105,7 @@ class GamePLay:
                 self.print_picture(NormalDrawing())
             else:
                 self.print_picture(CompetitveDrawing())
-        
+
 
 
     def print_picture(self, drawing: Idrawing):
@@ -121,7 +121,7 @@ class GamePLay:
 
 
 
-    
+
     def get_word(self):
         '''Gets random word from txt file'''
         self.word_to_guess = self.reader.get_words(self.game_category, self.game_difficulty)
