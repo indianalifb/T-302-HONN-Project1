@@ -9,7 +9,7 @@ from src.message_sender import MessageSender
 from src.player import Player
 from src.username_validator import UsernameValidator
 from src.Players.players_list import PlayersList
-from src.leaders.leaders import LeaderBoard 
+from src.leaders.leaders import LeaderBoard
 from src.game_play import GamePLay
 from src.buy_merch import BuyMerch
 from src.Observer.observable_high_score import ObservableHighScoreConcrete
@@ -17,9 +17,9 @@ from src.Observer.HighscoreDisplay import HighscoreDisplay
 
 
 class Hangman:
-    def __init__(self, player_list: PlayersList, leaderboard: LeaderBoard, game_play: GamePLay, 
-    player: Player, message_sender: MessageSender, username_validator: UsernameValidator, 
-    friend_validator: FriendValidator, buy_merch: BuyMerch, 
+    def __init__(self, player_list: PlayersList, leaderboard: LeaderBoard, game_play: GamePLay,
+    player: Player, message_sender: MessageSender, username_validator: UsernameValidator,
+    friend_validator: FriendValidator, buy_merch: BuyMerch,
     observable_high_score_concrete: ObservableHighScoreConcrete, high_score_display: HighscoreDisplay):
         self.username = ""
         self.game_mode = ""
@@ -38,7 +38,7 @@ class Hangman:
         self.observable_high_score_concrete = observable_high_score_concrete
         self.high_score_display = high_score_display
         self.observable_high_score_concrete.register_observer(self.high_score_display)
-    
+
 
         '''Every screen takes input from user and reacts occordingly'''
     def welcome_screen(self):
@@ -166,7 +166,7 @@ class Hangman:
             self.username_taken_screen()
 
 
-    
+
     def main_menu(self):
         print('-------------------------------------------------------')
         print("                     HI",self.username,"!              ")
@@ -281,7 +281,7 @@ class Hangman:
             self.main_menu()
         elif message_input == 'q':
             sys.exit()
-        # TODO: klara 
+        # TODO: klara
 
     def leaderboards_menu(self):
         leaders = self.leaderboard.get_leaders()
@@ -296,7 +296,7 @@ class Hangman:
 
             for tup in leaders:
                 print("** {0:30}    {1:<16}**".format(tup[0], tup[1]))
-        
+
             print("**                    back: 'b'                      **")
             print("**                     Quit: 'q'                     **")
             print('-------------------------------------------------------')
@@ -322,7 +322,7 @@ class Hangman:
         friend_username_input = input("Input:")
         if friend_username_input == "b":
             self.main_menu()
-        if self.username_validator.validate(friend_username_input):
+        if self.username_validator.validate(friend_username_input) and self.player_list.lookup(friend_username_input):
             self.player.add_friend(self.username, friend_username_input)
             self.friend_added_menu()
         elif friend_username_input == 'q':
