@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 
 class IAnimal(ABC):
     @abstractmethod
-    def draw_animal(self):
+    def draw_animal(self, number):
         pass
     def print_animal(self, animal_list,number):
         for i in range(len(animal_list)):
