@@ -28,11 +28,13 @@ In T-302-HONN-Projcet1 directory create a virtual environment<br/>
 Firstly make sure you have virtualenv installed<br/>
 ```pip install virtualenv```<br/>
 then we can run <br/>
-```virtualenv venv```<br/>
+```virtualenv venv``` 
+<br/>
 Next step we activate the environment<br/>
-```./venv/bin/activate```<br/>
+```./venv/bin/activate``` 
+<br/>
 or if using Fish shell<br/>
-```source venv/bin/activate.fish```<br/>
+```source venv/bin/activate.fish``` <br/>
 Next up let's install required packages<br/>
 ```python -m pip install -r requirements.txt```<br/>
 Now the virtual environment should be set up and we can finally run the program<br/>
